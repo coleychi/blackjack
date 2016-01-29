@@ -2,9 +2,7 @@ console.log("I'm running");
 
 // 1-- MAKE LOGIC WORK --> SHUFFLE, DRAW, RECOGNIZE BUST, MAKE ACE WORK
 
-    // -- SHUFFLE
-
-    // -- DRAW
+    // -- SHUFFLE / DRAW (PULL RANDOM NUMBER FROM ARRAY)
 
     // -- RECOGNIZE BUST
 
