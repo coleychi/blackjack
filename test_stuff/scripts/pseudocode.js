@@ -19,3 +19,9 @@
     // -- ADD A CSS CLASS TO FIRST DEALER'S CARD?
 
 // 6-- WINS AND LOSSES COUNTER
+
+
+// KNOWN PROBLEMS
+
+// player's start amount hardcoded into html 
+// should move playerbalance to message div function to somewhere else (player gets new notification each time he clicks button)

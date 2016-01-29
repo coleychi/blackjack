@@ -40,18 +40,25 @@ player.currentBet += integerBetAmount; // adjusts the player's bet amount
 // sets the player's bet amount as the placeholder text in input bar
 $betInputBar.attr("placeholder", player.currentBet);
 
+// player cannot bet money that he does not have
+if (player.balance <= 0) {
+
+  // console.log("NOPE"); // checks that if statement works
+
+  $placeBetButton.prop("disabled", true); // disables button functionality
+  alert("YOU DON'T HAVE ENOUGH MONEY TO DO THAT!!!!"); // alerts player that there is no more money
+
+}
+
+// Updates message center with bet information
 var $playerBalance = $(".money"); // grabs span with class money
 $playerBalance.text(player.balance); // START AMOUNT IS HARDCODED INTO HTMLs
+var $messageDiv = $("#message-center"); // grabs div with id "message-center"
+var $newMessage = $("<p>"); // creates new p tag
+$newMessage.text("You have placed your bet of " + player.currentBet); // sets innertext for p tags
+$messageDiv.append($newMessage); // appends new paragraph to message div
 
 }) // <-- closes placeBetButton click function
-
-// var $playerBankDiv = $("#bank"); // grabs div with id "bank"
-// var $playerBalance = $(".money"); // grabs span with class money
-// $playerBalance.text(player.balance)
-// $playerBankDiv.append($playerBalance)
-
-
-
 
 
 
