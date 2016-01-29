@@ -19,7 +19,38 @@ var player = {
 
 var $placeBetButton = $(".place-bet");
 
-$placeBetButton.click
+var $betInputBar = $("#bet-input");
+
+$placeBetButton.click(function(){ 
+// console.log(this); // confirms that this recognizes unique buttons
+
+var $betAmount = $(this).text().replace(/\$/g, ''); // removes dollar sign
+var integerBetAmount = parseInt($betAmount); // turns string into an integer that can be added/subtracted
+  // console.log(typeof($betAmount)); // this returns a string
+  // console.log(typeof(integerBetAmount)); // this returns an integer
+// console.log($betAmount); // confirms that correct amount has been selected
+
+player.balance -= integerBetAmount; // adjusts the player's balance 
+player.currentBet += integerBetAmount; // adjusts the player's bet amount
+
+// Checks that the math happened properly
+// console.log(player.balance);
+// console.log(player.currentBet);
+
+// sets the player's bet amount as the placeholder text in input bar
+$betInputBar.attr("placeholder", player.currentBet);
+
+var $playerBalance = $(".money"); // grabs span with class money
+$playerBalance.text(player.balance); // START AMOUNT IS HARDCODED INTO HTMLs
+
+}) // <-- closes placeBetButton click function
+
+// var $playerBankDiv = $("#bank"); // grabs div with id "bank"
+// var $playerBalance = $(".money"); // grabs span with class money
+// $playerBalance.text(player.balance)
+// $playerBankDiv.append($playerBalance)
+
+
 
 
 
