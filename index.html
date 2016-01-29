@@ -7,15 +7,18 @@
 <body>
 
 	<div id="container">
-		<h1>BlackJack!</h1>
+		<h1>Twenty-One</h1>
+
 		<section id="dealer">
 			
 			<div class="card">
-				Placeholder Card 1
+				<span class="card-name">7</span>
+<!-- 				Placeholder Card 1 -->
 			</div>
 
 			<div class="card">
-				Placeholder Card 2
+				<span class="card-name">8</span>
+<!-- 				Placeholder Card 2 -->
 			</div>
 
 		</section>
@@ -23,45 +26,55 @@
 		<section id="player">
 		
 			<div class="card">
-				Placeholder Card 1
+				<span class="card-name">K</span> 
+<!-- 				Placeholder Card 1 -->
 			</div>
 
 			<div class="card">
-				Placeholder Card 2
+				<span class="card-name">Q</span>
+<!-- 				Placeholder Card 2 -->
 			</div>
 
 			<div class="card">
-				Placeholder Card 3
+				<span class="card-name">10</span>
+<!-- 				Placeholder Card 3 -->
 			</div>
 
 		</section>
 
 		<section id="message-center">
 
-			TEST
+			<h2>Message Center</h2>
 
+			Test
 		</section>
+
+		<div id="bank">
+		Player Bank:<br>
+		<span class="money">$500</span>
+		</div>
 
 
 		<section id="user-panel">
 
 			<div id="player-move">
-				<button>Hit</button>
-				<button>Stay</button>
-			</div>
 
-			<div id="place-bet">
-				<button>$5</button>
-				<button> $10</button>
-				<button>$20</button>
-				<button>$50</button>
-				<input placeholder="current bet"></input>
-				<button>Submit</button>
+				<input id="bet-input" placeholder="current bet"></input><br>
+
+				<button class="place-bet">$5</button>
+				<button class="place-bet"> $10</button>
+				<button class="place-bet">$20</button>
+				<button class="place-bet">$50</button>
+				
+				<div class="move-button">Play</div>
+				<div class="move-button">Hit</div>
+				<div class="move-button">Stay</div>
+
 			</div>
 
 		</section>
 
-	</div>
+	</div> <!-- closes div container -->
 
 
 </body>

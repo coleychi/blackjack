@@ -1,10 +1,21 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+@font-face {
+    font-family: Playfair;
+    src: url('../fonts/PlayfairDisplay-Regular.ttf');
+}
+
 body {
-	background-color: #b4a8a1;
+	font-family: "Helvetica", sans-serif;
+	background-color: #142943;
 }
 
 #container {
 	width: 85%;
-	margin: 0 auto;
+	margin: 3em auto;
 	overflow: auto;
 /*	background-color: pink;*/
 }
@@ -31,23 +42,78 @@ body {
 
 #message-center {
 	width: 25%;
-	background-color: yellow;
-	height: 36.5%; /* THIS IS HARD CODED IN */
+	background-color: rgba(236, 238, 231, 0.4); /* same color as card */
+	padding: 1em;
+	height: 58.5%; /* THIS IS HARD CODED IN */
 	display: inline-block;
+/*	opacity: 0.4;*/
+	box-sizing: border-box;
+	transition: background-color 1.5s linear;
+}
+
+#message-center:hover {
+	background-color: rgba(236, 238, 231, 0.85);
+/*	opacity: 0.85; */
 }
 
 #user-panel {
 	width: 75%;
 	float: right;
 	padding: 1em;
-	background-color: purple;
+/*	background-color: purple;*/
 	display: block;
 	box-sizing: border-box;
 }
 
-#place-bet {
-/*	background-color: orange;*/
+#bank {
+	color: white;
+	width: 25%;
+	float: left;
+	padding: 0.5em;
+/*	background-color: purple;*/
+	display: block;
+	box-sizing: border-box;
 }
+
+.money {
+	font-size: 2.5em;
+	text-align: center;
+	display: block;
+	padding: 0.5em;
+}
+
+.place-bet {
+/*	background-color: orange;*/
+/*	float: right;
+	margin-right: 3em;*/
+	padding: 1em;
+	text-align: center;
+}
+
+#bet-input {
+	width: 192px;
+	font-size: 1em;
+	padding: 0.25em;
+}
+
+/*.place-bet input {
+	width: 500px;
+	font-size: 100px;
+}*/ /* input box won't adopt this */
+
+.move-button {
+	width: 65px;
+	text-align: center;
+	padding: 1em;
+	background-color: #d6dadd;
+/*	border: 1px solid black;*/
+	display: inline-block;
+	border-radius: 50px;
+}
+
+.move-button:first-of-type {
+	margin-left: 5em;
+} /*sets margin for only first div*/
 
 .card {
 	width: 5.5em;
@@ -55,7 +121,93 @@ body {
 	margin-right: 0.3em;
 	margin-left: 0.3em;
 	padding: 0.25em;
-	background-color: red;
+	background-color: #eceee7; /* same color as message center */
 	display: inline-block;
+	position: relative;
 	text-align: left;
+	border-radius: 0.5em;
 }
+
+.card-name {
+/*	background-color: green;*/
+	font-family: "Helvetica", sans-serif;
+	font-weight: bold;
+	color: #f01a90;
+	font-size: 1.5em;
+	position: absolute;
+	padding-top: 0.2em;
+	padding-right: 0.35em;
+	top: 0;
+	right: 0;
+}
+
+h1 {
+	color: white;
+	font-family: "Playfair", "Times New Roman";
+	font-size: 2.5em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	letter-spacing: 2px;
+}
+
+h2 {
+/*	background-color: #89c3c7;*/
+	padding: 0.3em;
+	color: white;
+	margin: -0.67em; /* h2 adopting padding of #message-center parent */
+	margin-bottom: 0.5em; /* h2 adopting padding of #message-center parent */
+	display: block;
+} /* degrades around 947px */
+
+@media (max-width: 959px) {
+	/* minimum width is around 792... starts to look silly */
+
+	body {
+/*		background-color: yellow;*/
+		font-size: 0.9em;
+	}
+
+	#dealer {
+		margin-top: 2em;
+	}
+
+	.place-bet {
+		padding: 0.8em;
+	}
+
+	#bet-input {
+	width: 174px;
+	margin-bottom: 0.5em;
+	font-size: 1em;
+	padding: 0.25em;
+	} 
+
+	.move-button {
+		width: 55px;
+		padding: 0.5em;
+	} /* looks a little silly starting at 754 */
+
+	.move-button:first-of-type {
+	margin-left: 1.25em;
+	} /*sets margin for only first div*/
+	
+
+	h2 {
+		font-size: 1.15em;
+	}
+
+}
+
+@media (max-width: 402px) {
+	#dealer {
+		width: 100%;
+	}
+
+	#player {
+		width: 100%;
+	}
+
+	#message-center {
+		display: none;
+	}
+} /* 405 will fit 2 cards */ 
