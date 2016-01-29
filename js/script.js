@@ -81,6 +81,107 @@
   } // <-- closes buildDeck function
 
 
+  // ============== 
+  // DEAL THE CARDS
+  // --------------
+  buildDeck();
+
+  var pickedCard; // store outside of random card function so I can access it later
+
+  // selects card object from random index of cards array
+  var drawRandomCard = function() {
+
+    var arrayLength = cards.length; // stores length of array
+
+    var randomIndex = Math.floor(Math.random() * arrayLength); // generates random index position
+
+    pickedCard = cards[randomIndex]; // pulls card using randomly generated index position
+
+    // console.log(cards[randomIndex]);
+
+    console.log(pickedCard); // confirming that pickedCard is the same as cards[randomIndex]
+
+    pickedCard.used = true; // is there a way to do toggle card using "this"?
+
+    // console.log(pickedCard); // checks if value of used has been toggled to true
+
+    // while (pickedCard.used === true) {
+
+    // }
+
+
+    // NEED TO REMOVE THE DRAWN CARD FROM THE DECK
+
+  } // <-- closes drawRandomCard function
+
+
+  // function creates a card div with the number or face inside
+  var dealCard = function() {
+  
+    drawRandomCard()
+
+    var $playerSection = $("#player"); // grabs player section
+
+    $createCard = $("<div class='card'>");
+
+    $createCard.appendTo($playerSection);
+
+    $cardNumber = $("<span class='card-name'>");
+
+    if(pickedCard.numberCard == false) {
+
+      $cardNumber.text(pickedCard.faceCard);
+
+    } else {
+
+      $cardNumber.text(pickedCard.numberCard); 
+
+    }
+
+    // $cardNumber.text(pickedCard.numberCard); // what to do here if it's not a number
+        // if statement?
+
+    $createCard.append($cardNumber)
+
+  }
+
+  // play button generates user hand
+  var $playButton = $("#play"); // grabs element with id "play"
+
+  $playButton.click(function(){
+
+    for (i=0; i < 2; i++) {
+
+      drawRandomCard();
+
+      dealCard();
+
+      player.hand.push(pickedCard)
+
+    }
+
+    addCardValues();
+
+  }) // <-- closes playButton click function
+
+
+  // hit button generates one card
+
+  var $hitButton = $("#hit");
+
+  $hitButton.click(function() {
+
+    drawRandomCard();
+
+    dealCard();
+
+    player.hand.push(pickedCard);
+
+    addCardValues();
+
+  }); // <-- closes hitButton click function
+
+
 
   // =====================
   // BETTING FUNCTIONALITY
@@ -117,7 +218,7 @@
     $placeBetButton.prop("disabled", true); // disables button functionality
     alert("YOU DON'T HAVE ENOUGH MONEY TO DO THAT!!!!"); // alerts player that there is no more money
 
-  }
+  } // <-- closes if statement
 
   // Updates message center with bet information
   var $playerBalance = $(".money"); // grabs span with class money
@@ -129,22 +230,30 @@
 
   }) // <-- closes placeBetButton click function
 
+  // ====================
+  // BLACKJACK GAME LOGIC
+  // --------------------
 
-  // ==================
-  // DEAL INITIAL HAND
-  // ------------------
+  // adds card values
+  var addCardValues = function () {
 
-  var $playButton = $("#play"); // grabs element with id "play"
+    console.log(player.hand)
 
-  $playButton.click(function(){
+    player.handSum = 0; // resets player.handSum to zero (otherwise numbers add weirdly)
 
-    console.log("ready to play?"); // confirms button responds on click
+    for (i = 0; i < player.hand.length; i++) {
 
-    
+      // console.log(player.hand[i].cardValue);
 
-  }) // <-- closes playButton click function
+      player.handSum += player.hand[i].cardValue;
 
+    }
+
+      console.log(player.handSum)
+
+  } // <-- close check for twenty one
 
 
 // }); // <-- closes onload function
+
 

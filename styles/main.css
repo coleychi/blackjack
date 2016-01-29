@@ -141,6 +141,10 @@ body {
 	right: 0;
 }
 
+.hidden {
+	background-color: red;
+} /* need to remove .card-name span in js file */
+
 h1 {
 	color: white;
 	font-family: "Playfair", "Times New Roman";

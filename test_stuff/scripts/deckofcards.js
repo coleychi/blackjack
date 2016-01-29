@@ -133,7 +133,7 @@ var player = {
 
 
 
-var dealToPlayer = function() {
+var dealHand = function() {
 
   for (i = 0; i < 2; i++){
 
@@ -145,7 +145,7 @@ var dealToPlayer = function() {
 
 }
 
-dealToPlayer();
+dealHand();
 // console.log(player.hand[0].cardValue);
 
 
