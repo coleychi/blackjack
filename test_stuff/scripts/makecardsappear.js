@@ -1,5 +1,3 @@
-// // THIS GOES WITH "CARDS.HTML"
-// console.log("I'm alive!");
 
 // CREATE A DECK OF CARDS ---------
 
@@ -60,31 +58,8 @@ var buildDeck = function() {
 } // <-- closes buildDeck function
 
 
-buildDeck(); // calling function
-console.log(cards); // confirming each card has been stored in cards variable
-console.log(typeof(cards)); // confirming cards is an object
 
-// ------- END CREATE A DECK OF CARDS
-
-
-
-// DRAW A RANDOM CARD FROM THE DECK------
-
-    // STRATEGY: GENERATE RANDOM NUMBER BETWEEN 0 AND 51 AND PULL THAT ITEM FROM CARDS ARRAY
-
-// console.log(Math.floor(Math.random() * 52)); // checking that random numbers are being generated
-// (confirming logic)
-
-      // THIS LOGIC WORKS --- 
-      //     var arrayLength = cards.length; // stores integer value of the amount of items in cards array
-      //     console.log(arrayLength); // confirms arrayLength is 52
-
-      //     var randomIndex = Math.floor(Math.random() * arrayLength); // IS THERE A WAY TO MAKE THIS MORE RANDOM?
-      //     // (also do I need to add + 1)
-      //     console.log(randomIndex); // confirms random number is being generated
-
-      //     cards[randomIndex]; // selects card from cards array basedon the randomly generated index value
-      // // --- END WORKING LOGIC
+buildDeck();
 
 var pickedCard; // store outside of random card function so I can access it later
 
@@ -113,63 +88,38 @@ var drawRandomCard = function() {
 
 } // <-- closes drawRandomCard function
 
+drawRandomCard()
 
-// drawRandomCard(); // testing drawRandomCard function
+var $playButton = $("#play"); // grabs element with id "play"
 
-// console.log(cards);
+$playButton.click(function(){
 
+  console.log("ready to play?"); // confirms button responds on click
 
-// --- END DRAW A RANDOM CARD FROM THE DECK
+  var $playerSection = $("#player"); // grabs player section
 
-var player = {
+  $createCard = $("<div class='card'>");
 
-  hand: [],
-  handSum: null, // lol handsome
-  hasBlackjack: false,
-  hasBust: false
+  $createCard.appendTo($playerSection);
 
-};
+  $cardNumber = $("<span class='card-name'>");
 
+  if(pickedCard.numberCard == false) {
 
+    $cardNumber.text(pickedCard.faceCard);
 
+  } else {
 
-var dealToPlayer = function() {
-
-  for (i = 0; i < 2; i++){
-
-    drawRandomCard();
-
-    player.hand.push(pickedCard);
-
-   } // closes for loop 
-
-}
-
-dealToPlayer();
-// console.log(player.hand[0].cardValue);
-
-
-
-
-// adds card values
-var addCardValues = function () {
-
-  console.log(player.hand)
-
-  for (i = 0; i < player.hand.length; i++) {
-
-    // console.log(player.hand[i].cardValue);
-
-    player.handSum += player.hand[i].cardValue;
+    $cardNumber.text(pickedCard.numberCard); 
 
   }
 
-} // <-- close check for twenty one
+  // $cardNumber.text(pickedCard.numberCard); // what to do here if it's not a number
+      // if statement?
 
-addCardValues()
-
-console.log(player.handSum)
+  $createCard.append($cardNumber)
 
 
+}) // <-- closes playButton click function
 
 

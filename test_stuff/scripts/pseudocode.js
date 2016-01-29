@@ -25,3 +25,4 @@
 
 // player's start amount hardcoded into html 
 // should move playerbalance to message div function to somewhere else (player gets new notification each time he clicks button)
+// need to remove drawn cards from the deck
