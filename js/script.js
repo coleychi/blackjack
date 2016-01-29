@@ -146,13 +146,82 @@
 
   }
 
+
   // play button generates user hand (draw two cards)
   var $playButton = $("#play"); // grabs element with id "play"
 
   $playButton.click(function(){
 
-    // iteration runs twice
-    for (i = 0; i < 2; i++) {
+    // console.log("this is this " + this); // checks correct item is selected
+
+    if (!$(this).hasClass("disable-click")) {
+      // iteration runs twice
+      for (i = 0; i < 2; i++) {
+
+        drawRandomCard(); // draws random card from cards array
+
+        dealCard(); // displays card in div with id "player"
+
+        player.hand.push(pickedCard); // pushes the dealt card to player's hand
+
+      } 
+
+      addCardValues(); // function adds the value of all cards in player's hand array
+
+      checkForBlackjack(); // checks player's hand sum for blackjack
+
+      checkForBust(); // checks player's hand sum for bust
+
+      // console.log(this);
+      // console.log($(this));
+
+      $(this).addClass("disable-click"); // disables onclick function from firing
+      // this.addClass.("clicked");
+
+    } else {
+
+        var $newMessage = $("<p>");
+        $newMessage.text("You were already dealt a hand!");
+        $("#message-center").append($newMessage);
+
+      } // <-- closes if/else statement
+
+  }); // <-- closes playButton click function
+
+
+        // BELOW CAN BE DELETED PROBABLY
+        // // play button generates user hand (draw two cards)
+        // var $playButton = $("#play"); // grabs element with id "play"
+
+        // $playButton.click(function(){
+
+        //   // iteration runs twice
+        //   for (i = 0; i < 2; i++) {
+
+        //     drawRandomCard(); // draws random card from cards array
+
+        //     dealCard(); // displays card in div with id "player"
+
+        //     player.hand.push(pickedCard); // pushes the dealt card to player's hand
+
+        //   };
+
+        //   addCardValues(); // function adds the value of all cards in player's hand array
+
+        //   checkForBlackjack(); // checks player's hand sum for blackjack
+
+        //   checkForBust(); // checks player's hand sum for bust
+
+        // }); // <-- closes playButton click function
+
+
+        // hit button generates one card
+
+  var $hitButton = $("#hit");
+
+  $hitButton.click(function() {
+
+    if (!$hitButton.hasClass("disable-click")) {
 
       drawRandomCard(); // draws random card from cards array
 
@@ -160,34 +229,19 @@
 
       player.hand.push(pickedCard); // pushes the dealt card to player's hand
 
-    };
+      addCardValues(); // function adds the value of all cards in player's hand array
 
-    addCardValues(); // function adds the value of all cards in player's hand array
+      checkForBlackjack(); // checks player's hand sum for blackjack
 
-    checkForBlackjack(); // checks player's hand sum for blackjack
+      checkForBust(); // checks player's hand sum for bust
 
-    checkForBust(); // checks player's hand sum for bust
+    } else {
 
-  }); // <-- closes playButton click function
+        var $newMessage = $("<p>");
+        $newMessage.text("You can't have another card, silly!");
+        $("#message-center").append($newMessage);
 
-
-  // hit button generates one card
-
-  var $hitButton = $("#hit");
-
-  $hitButton.click(function() {
-
-    drawRandomCard(); // draws random card from cards array
-
-    dealCard(); // displays card in div with id "player"
-
-    player.hand.push(pickedCard); // pushes the dealt card to player's hand
-
-    addCardValues(); // function adds the value of all cards in player's hand array
-
-    checkForBlackjack(); // checks player's hand sum for blackjack
-
-    checkForBust(); // checks player's hand sum for bust
+    } // <-- closes if statement
 
   }); // <-- closes hitButton click function
 
@@ -269,6 +323,8 @@
 
       alert("BLACKJACK!");
 
+      $("#hit").addClass("disable-click");
+
     };
 
   }; // <-- closes checkForBlackjack function
@@ -277,7 +333,9 @@
 
     if (player.handSum > 21) {
 
-      alert("BUST!")
+      alert("BUST!");
+
+      $("#hit").addClass("disable-click");
 
     };
 

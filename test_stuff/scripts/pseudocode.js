@@ -33,3 +33,7 @@
 // turn off play button until end of the round
 
 // game logic (adding card values) only works for the first two
+
+// ADDED CLASS CLICKED TO PLAY-- REMEMBER TO REMOVE IT!!!!!!!
+
+// is there a way to post message once if user keeps pressing button?
