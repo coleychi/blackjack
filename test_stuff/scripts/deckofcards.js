@@ -1,3 +1,5 @@
+// Tested some card functions here
+
 // // THIS GOES WITH "CARDS.HTML"
 // console.log("I'm alive!");
 

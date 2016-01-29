@@ -1,6 +1,6 @@
 // $(function() { 
 
-  console.log("I'm running");
+  // console.log("I'm running"); // confirms that 
 
 
   // =====================
@@ -204,39 +204,39 @@
   $placeBetButton.click(function(){ 
   // console.log(this); // confirms that this recognizes unique buttons
 
-  var $betAmount = $(this).text().replace(/\$/g, ''); // removes dollar sign
-  var integerBetAmount = parseInt($betAmount); // turns string into an integer that can be added/subtracted
-    // console.log(typeof($betAmount)); // this returns a string
-    // console.log(typeof(integerBetAmount)); // this returns an integer
-  // console.log($betAmount); // confirms that correct amount has been selected
+    var $betAmount = $(this).text().replace(/\$/g, ''); // removes dollar sign
+    var integerBetAmount = parseInt($betAmount); // turns string into an integer that can be added/subtracted
+      // console.log(typeof($betAmount)); // this returns a string
+      // console.log(typeof(integerBetAmount)); // this returns an integer
+    // console.log($betAmount); // confirms that correct amount has been selected
 
-  player.balance -= integerBetAmount; // adjusts the player's balance 
-  player.currentBet += integerBetAmount; // adjusts the player's bet amount
+    player.balance -= integerBetAmount; // adjusts the player's balance 
+    player.currentBet += integerBetAmount; // adjusts the player's bet amount
 
-  // Checks that the math happened properly
-  // console.log(player.balance);
-  // console.log(player.currentBet);
+    // Checks that the math happened properly
+    // console.log(player.balance);
+    // console.log(player.currentBet);
 
-  // sets the player's bet amount as the placeholder text in input bar
-  $betInputBar.attr("placeholder", player.currentBet);
+    // sets the player's bet amount as the placeholder text in input bar
+    $betInputBar.attr("placeholder", player.currentBet);
 
-  // player cannot bet money that he does not have
-  if (player.balance <= 0) {
+    // player cannot bet money that he does not have
+    if (player.balance <= 0) {
 
-    // console.log("NOPE"); // checks that if statement works
+      // console.log("NOPE"); // checks that if statement works
 
-    $placeBetButton.prop("disabled", true); // disables button functionality
-    alert("YOU DON'T HAVE ENOUGH MONEY TO DO THAT!!!!"); // alerts player that there is no more money
+      $placeBetButton.prop("disabled", true); // disables button functionality
+      alert("YOU DON'T HAVE ENOUGH MONEY TO DO THAT!!!!"); // alerts player that there is no more money
 
-  }; // <-- closes if statement
+    }; // <-- closes if statement
 
-  // Updates message center with bet information
-  var $playerBalance = $(".money"); // grabs span with class money
-  $playerBalance.text(player.balance); // START AMOUNT IS HARDCODED INTO HTML
-  var $messageDiv = $("#message-center"); // grabs div with id "message-center"
-  var $newMessage = $("<p>"); // creates new p tag
-  $newMessage.text("You have placed your bet of " + player.currentBet); // sets innertext for p tags
-  $messageDiv.append($newMessage); // appends new paragraph to message div
+    // Updates message center with bet information
+    var $playerBalance = $(".money"); // grabs span with class money
+    $playerBalance.text(player.balance); // START AMOUNT IS HARDCODED INTO HTML
+    var $messageDiv = $("#message-center"); // grabs div with id "message-center"
+    var $newMessage = $("<p>"); // creates new p tag
+    $newMessage.text("You have placed your bet of " + player.currentBet); // sets innertext for p tags
+    $messageDiv.append($newMessage); // appends new paragraph to message div
 
   }); // <-- closes placeBetButton click function
 
@@ -244,7 +244,7 @@
   // BLACKJACK GAME LOGIC
   // --------------------
 
-  // adds card values
+  // adds card values // CHANGE PLAYER TO THIS TO REUSE THIS FUNCTION FOR THE DEALER
   var addCardValues = function () {
 
     console.log(player.hand);

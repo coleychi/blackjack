@@ -1,3 +1,6 @@
+// THIS CODE WILL MAKE TWO RANDOM CARDS APPEAR WHEN THE PLAYER PRESSES PLAY
+// created this file to test ways to make cards appear dynamically 
+
 var player = {
 
   hand: [],
