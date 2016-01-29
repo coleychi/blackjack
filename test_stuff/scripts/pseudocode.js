@@ -1,29 +1,3 @@
-console.log("I'm running");
-
-// Creates player object with default key values
-
-var player = {
-
-  hand: [],
-  balance: 500,
-  currentBet: null,
-  handSum: null, // lol handsome
-  hasBlackjack: false,
-  hasBust: false,
-
-};
-
-// =====================
-// BETTING FUNCTIONALITY
-// ---------------------
-
-var $placeBetButton = $(".place-bet");
-
-$placeBetButton.click
-
-
-
-
 // 1-- MAKE LOGIC WORK --> SHUFFLE, DRAW, RECOGNIZE BUST, MAKE ACE WORK
 
     // -- SHUFFLE / DRAW (PULL RANDOM NUMBER FROM ARRAY)
