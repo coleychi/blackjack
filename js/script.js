@@ -19,7 +19,6 @@
   };
 
 
-
   // ======================
   // GENERATE DECK OF CARDS
   // ----------------------
@@ -36,6 +35,7 @@
   } // closes constructor function
 
   var cards = []; // empty array for new cards to be pushed into
+
 
   // Uses Card constructor to create a deck of cards
   var buildDeck = function() {
@@ -84,7 +84,8 @@
   // ============== 
   // DEAL THE CARDS
   // --------------
-  buildDeck();
+
+  buildDeck(); // is this is the best place to put this?
 
   var pickedCard; // store outside of random card function so I can access it later
 
@@ -118,51 +119,56 @@
   // function creates a card div with the number or face inside
   var dealCard = function() {
   
-    drawRandomCard()
+    drawRandomCard(); // select random object (card) from cards array
 
     var $playerSection = $("#player"); // grabs player section
 
-    $createCard = $("<div class='card'>");
+    $createCard = $("<div class='card'>"); // creates div with class "card"
 
-    $createCard.appendTo($playerSection);
+    $createCard.appendTo($playerSection); // appends new card to the player section
 
-    $cardNumber = $("<span class='card-name'>");
+    $cardNumber = $("<span class='card-name'>"); // creates span with class "card-name" where the card name will display
 
     if(pickedCard.numberCard == false) {
 
-      $cardNumber.text(pickedCard.faceCard);
+      $cardNumber.text(pickedCard.faceCard); // if the card is not a number, display face value in span
 
     } else {
 
-      $cardNumber.text(pickedCard.numberCard); 
+      $cardNumber.text(pickedCard.numberCard); // if the card is a number, display number value in span
 
     }
 
     // $cardNumber.text(pickedCard.numberCard); // what to do here if it's not a number
         // if statement?
 
-    $createCard.append($cardNumber)
+    $createCard.append($cardNumber); // appends span to card div
 
   }
 
-  // play button generates user hand
+  // play button generates user hand (draw two cards)
   var $playButton = $("#play"); // grabs element with id "play"
 
   $playButton.click(function(){
 
-    for (i=0; i < 2; i++) {
+    // iteration runs twice
+    for (i = 0; i < 2; i++) {
 
-      drawRandomCard();
+      drawRandomCard(); // draws random card from cards array
 
-      dealCard();
+      dealCard(); // displays card in div with id "player"
 
-      player.hand.push(pickedCard)
+      player.hand.push(pickedCard); // pushes the dealt card to player's hand
 
-    }
+    };
 
-    addCardValues();
+    addCardValues(); // function adds the value of all cards in player's hand array
 
-  }) // <-- closes playButton click function
+    checkForBlackjack(); // checks player's hand sum for blackjack
+
+    checkForBust(); // checks player's hand sum for bust
+
+  }); // <-- closes playButton click function
 
 
   // hit button generates one card
@@ -171,13 +177,17 @@
 
   $hitButton.click(function() {
 
-    drawRandomCard();
+    drawRandomCard(); // draws random card from cards array
 
-    dealCard();
+    dealCard(); // displays card in div with id "player"
 
-    player.hand.push(pickedCard);
+    player.hand.push(pickedCard); // pushes the dealt card to player's hand
 
-    addCardValues();
+    addCardValues(); // function adds the value of all cards in player's hand array
+
+    checkForBlackjack(); // checks player's hand sum for blackjack
+
+    checkForBust(); // checks player's hand sum for bust
 
   }); // <-- closes hitButton click function
 
@@ -218,7 +228,7 @@
     $placeBetButton.prop("disabled", true); // disables button functionality
     alert("YOU DON'T HAVE ENOUGH MONEY TO DO THAT!!!!"); // alerts player that there is no more money
 
-  } // <-- closes if statement
+  }; // <-- closes if statement
 
   // Updates message center with bet information
   var $playerBalance = $(".money"); // grabs span with class money
@@ -228,7 +238,7 @@
   $newMessage.text("You have placed your bet of " + player.currentBet); // sets innertext for p tags
   $messageDiv.append($newMessage); // appends new paragraph to message div
 
-  }) // <-- closes placeBetButton click function
+  }); // <-- closes placeBetButton click function
 
   // ====================
   // BLACKJACK GAME LOGIC
@@ -237,7 +247,7 @@
   // adds card values
   var addCardValues = function () {
 
-    console.log(player.hand)
+    console.log(player.hand);
 
     player.handSum = 0; // resets player.handSum to zero (otherwise numbers add weirdly)
 
@@ -249,9 +259,29 @@
 
     }
 
-      console.log(player.handSum)
+      console.log(player.handSum);
 
-  } // <-- close check for twenty one
+  } // <-- closes addCardValues function
+
+  var checkForBlackjack = function() {
+
+    if (player.handSum === 21) {
+
+      alert("BLACKJACK!");
+
+    };
+
+  }; // <-- closes checkForBlackjack function
+
+  var checkForBust = function() {
+
+    if (player.handSum > 21) {
+
+      alert("BUST!")
+
+    };
+
+  }; // <-- closes checkForBust function
 
 
 // }); // <-- closes onload function
