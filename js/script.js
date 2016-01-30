@@ -287,11 +287,70 @@
 
   }); // <-- closes placeBetButton click function
 
+  // =========================
+  // DEALER FUNCTION AND LOGIC
+  // -------------------------
+
+  var dealer = {
+
+    hand: [],
+    handSum: null, // lol handsome
+    hasBlackjack: false, // might be able to take this out?
+    hasBust: false, // might be able to take this out?
+
+  };
+
+  var generateDealerHand = function() {
+
+    var $dealerSection = $("#dealer");
+
+    drawRandomCard(); // draws random card from cards array
+
+    dealer.hand.push(pickedCard); // pushes the dealt card to dealer's hand
+
+    $createSecretCard = $("<div class='card hidden-card'>"); // gives first card a hidden class
+
+    $createSecretCard.appendTo($dealerSection); // appends first card to dealer's section
+
+    dealer.handSum += pickedCard.cardValue;
+
+    while (dealer.handSum <= 17) {
+
+      drawRandomCard(); // draws random card from cards array
+
+      dealer.hand.push(pickedCard); // pushes the dealt card to dealer's hand
+
+      dealer.handSum += pickedCard.cardValue; // adds value of picked card to dealer's hand sum
+
+      $createCard = $("<div class='card'>");
+
+      $createCard.appendTo($dealerSection);
+
+      $cardNumber = $("<span class='card-name'>");
+
+      if(pickedCard.numberCard == false) {
+
+        $cardNumber.text(pickedCard.faceCard); // if the card is not a number, display face value in span
+
+        } else {
+
+        $cardNumber.text(pickedCard.numberCard); // if the card is a number, display number value in span
+
+      } // <-- closes if loop 
+
+    $createCard.append($cardNumber);
+
+    } // <-- closes while loop
+
+  } // <-- closes generateDealerHand function
+
+
   // ====================
   // BLACKJACK GAME LOGIC
   // --------------------
 
   // adds card values // CHANGE PLAYER TO THIS TO REUSE THIS FUNCTION FOR THE DEALER
+
   var addCardValues = function () {
 
     console.log(player.hand);
