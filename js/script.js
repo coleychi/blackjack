@@ -36,6 +36,7 @@
 
   var cards = []; // empty array for new cards to be pushed into
 
+  var usedCardsCount = 0; // stores the number of used cards in cards array
 
   // Uses Card constructor to create a deck of cards
   var buildDeck = function() {
@@ -92,6 +93,18 @@
   // selects card object from random index of cards array
   var drawRandomCard = function() {
 
+    if (usedCardsCount > 35) {
+
+      for (var i = 0; i < cards.length; i++) {
+
+        cards[i].used = false;
+
+      } // resets all the cards used values to false 
+
+      usedCardsCount = 0; // resets counter to 0
+
+    } // <-- closes if statement    
+
     var arrayLength = cards.length; // stores length of array
 
     var randomIndex = Math.floor(Math.random() * arrayLength); // generates random index position
@@ -102,16 +115,23 @@
 
     console.log(pickedCard); // confirming that pickedCard is the same as cards[randomIndex]
 
-    pickedCard.used = true; // is there a way to do toggle card using "this"?
+    while (pickedCard.used === true) {
+
+      newRandomIndex = Math.floor(Math.random() * arrayLength);
+
+      pickedCard = cards[newRandomIndex];
+
+      console.log(pickedCard);
+
+    } // <-- closes while loop
 
     // console.log(pickedCard); // checks if value of used has been toggled to true
 
-    // while (pickedCard.used === true) {
+    pickedCard.used = true; // is there a way to do toggle card using "this"?
 
-    // }
+    usedCardsCount += 1; // adds 1 to usedCardsCount value
 
-
-    // NEED TO REMOVE THE DRAWN CARD FROM THE DECK
+    // usedCardsCount += 1; // adds 1 to the counter
 
   } // <-- closes drawRandomCard function
 
@@ -188,34 +208,7 @@
 
   }); // <-- closes playButton click function
 
-
-        // BELOW CAN BE DELETED PROBABLY
-        // // play button generates user hand (draw two cards)
-        // var $playButton = $("#play"); // grabs element with id "play"
-
-        // $playButton.click(function(){
-
-        //   // iteration runs twice
-        //   for (i = 0; i < 2; i++) {
-
-        //     drawRandomCard(); // draws random card from cards array
-
-        //     dealCard(); // displays card in div with id "player"
-
-        //     player.hand.push(pickedCard); // pushes the dealt card to player's hand
-
-        //   };
-
-        //   addCardValues(); // function adds the value of all cards in player's hand array
-
-        //   checkForBlackjack(); // checks player's hand sum for blackjack
-
-        //   checkForBust(); // checks player's hand sum for bust
-
-        // }); // <-- closes playButton click function
-
-
-        // hit button generates one card
+  // hit button generates one card
 
   var $hitButton = $("#hit");
 
@@ -351,5 +344,3 @@
 
 
 // }); // <-- closes onload function
-
-
