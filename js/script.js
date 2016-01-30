@@ -13,8 +13,8 @@
     balance: 500,
     currentBet: null,
     handSum: null, // lol handsome
-    hasBlackjack: false,
-    hasBust: false,
+    hasBlackjack: false, // might be able to take this out?
+    hasBust: false, // might be able to take this out?
 
   };
 
@@ -321,7 +321,11 @@
 
     if (player.handSum === 21) {
 
+      player.hasBlackjack = true; // sets hasBlackjack key to true in player object
+
       alert("BLACKJACK!");
+
+      // console.log(this)
 
       $("#hit").addClass("disable-click");
 
@@ -333,11 +337,15 @@
 
     if (player.handSum > 21) {
 
+      player.hasBust = true; // sets hasBust key to true in player object
+
       alert("BUST!");
 
       $("#hit").addClass("disable-click");
 
     };
+
+    // console.log(player)
 
   }; // <-- closes checkForBust function
 

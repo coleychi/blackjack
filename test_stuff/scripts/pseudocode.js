@@ -10,7 +10,7 @@
 
 // 2-- DO DEALER (look up rules-- when to continue drawing) 
 
-// 3-- BETTING (can't bet negative, can't bet more than you have)
+// 3-- BETTING (can't bet negative, can't bet more than you have) -- DONE!
 
 // 4-- BUTTON FUNCTIONALITY
 
@@ -23,19 +23,24 @@
 // can input box accept given input?
 
 
-// KNOWN PROBLEMS
+// KNOWN PROBLEMS AND OTHER NOTES
 
 // player's start amount hardcoded into html 
-// should move playerbalance to message div function to somewhere else (player gets new notification each time he clicks button)
-// need to remove drawn cards from the deck
 
+// should move playerbalance to message div function to somewhere else -- DONE!
+
+// is there a way to post message once if user keeps pressing button?
+
+// need to remove drawn cards from the deck
 
 // deal and draw can probably be combined into one function
 
-// turn off play button until end of the round
+// turn off play button until end of the round -- DONE!
 
-// game logic (adding card values) only works for the first two
+// game logic (adding card values) only works for the first two -- DONE!
+  // what was the problem here again?
 
 // ADDED CLASS CLICKED TO PLAY-- REMEMBER TO REMOVE IT!!!!!!!
 
-// is there a way to post message once if user keeps pressing button?
+// might be able to take out .hasBust and .hasBlackjack keys in player object
+
