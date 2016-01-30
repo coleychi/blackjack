@@ -20,6 +20,8 @@
 
 // 6-- WINS AND LOSSES COUNTER
 
+// can input box accept given input?
+
 
 // KNOWN PROBLEMS
 
