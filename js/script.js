@@ -43,7 +43,8 @@
 
     var face = ["A", "J", "Q", "K"];
     var numbers = [2, 3, 4, 5, 6, 7, 8, 9, 10];
-    var suits = ["Club", "Spade", "Diamond", "Heart"];
+    var suits = ["&clubs;", "&spades;", "&diams;", "&hearts;"]
+    // var suits = ["Club", "Spade", "Diamond", "Heart"];
 
         // // tests that a new card can be created
         // cards.push(new Card(false, suits[0], false, numbers[0]))
@@ -159,10 +160,13 @@
 
     }
 
-    // $cardNumber.text(pickedCard.numberCard); // what to do here if it's not a number
-        // if statement?
-
     $createCard.append($cardNumber); // appends span to card div
+
+    $cardSuit = $("<span class='card-suit'>");
+
+    $cardSuit.html(pickedCard.suit);
+
+    $createCard.append($cardSuit);
 
   }
 
@@ -174,11 +178,11 @@
 
     // console.log("this is this " + this); // checks correct item is selected
 
-    if (!$(this).hasClass("disable-click")) {
+    if (!$(this).hasClass("disable-click") && !$(this).hasClass("bet-first")) {
       // iteration runs twice
       for (i = 0; i < 2; i++) {
 
-        drawRandomCard(); // draws random card from cards array
+        // drawRandomCard(); // draws random card from cards array
 
         dealCard(); // displays card in div with id "player"
 
@@ -198,6 +202,12 @@
       $(this).addClass("disable-click"); // disables onclick function from firing
       // this.addClass.("clicked");
 
+    } else if ($(this).hasClass("bet-first")) {
+
+        var $newMessage = $("<p>");
+        $newMessage.text("Place a bet first");
+        $("#message-center").append($newMessage);
+
     } else {
 
         var $newMessage = $("<p>");
@@ -216,7 +226,7 @@
 
     if (!$hitButton.hasClass("disable-click")) {
 
-      drawRandomCard(); // draws random card from cards array
+      // drawRandomCard(); // draws random card from cards array
 
       dealCard(); // displays card in div with id "player"
 
@@ -237,6 +247,22 @@
     } // <-- closes if statement
 
   }); // <-- closes hitButton click function
+
+  // stay button generates dealer's hand
+
+  var $stayButton = $("#stay");
+
+  $stayButton.click(function() {
+
+    if (!$(this).hasClass("disable-click") && !$hitButton.hasClass("disable-click")) { // might be able to take this out
+
+      generateDealerHand(); // generates the dealer's hand
+
+      $(this).addClass("disable-click");
+
+    }
+
+  }) // <-- closes stayButton function
 
 
 
@@ -285,6 +311,8 @@
     $newMessage.text("You have placed your bet of " + player.currentBet); // sets innertext for p tags
     $messageDiv.append($newMessage); // appends new paragraph to message div
 
+    $("#play").removeClass("bet-first"); // removes class "bet-first" so player can play
+
   }); // <-- closes placeBetButton click function
 
   // =========================
@@ -322,6 +350,8 @@
 
       dealer.handSum += pickedCard.cardValue; // adds value of picked card to dealer's hand sum
 
+      console.log(dealer.handSum)
+
       $createCard = $("<div class='card'>");
 
       $createCard.appendTo($dealerSection);
@@ -339,6 +369,12 @@
       } // <-- closes if loop 
 
     $createCard.append($cardNumber);
+
+    $cardSuit = $("<span class='card-suit'>");
+
+    $cardSuit.html(pickedCard.suit);
+
+    $createCard.append($cardSuit);
 
     } // <-- closes while loop
 

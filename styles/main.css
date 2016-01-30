@@ -22,6 +22,7 @@ body {
 
 #dealer {
 	width: 75%;
+	min-height: 175px;
 	float: right;
 /*	background-color: green;*/
 	padding: 2em;
@@ -153,7 +154,6 @@ body {
 
 .card-name {
 /*	background-color: green;*/
-	font-family: "Helvetica", sans-serif;
 	font-weight: bold;
 	color: #f12070;
 	font-size: 1.5em;
@@ -163,6 +163,15 @@ body {
 	padding-right: 0.35em;
 	top: 0;
 	right: 0;
+}
+
+.card-suit {
+	position: absolute;
+	top: 4%;
+	left: 10%;
+	font-size: 5em;
+	color: #20a4b3;
+	opacity: 0.3;
 }
 
 .hidden-card {
@@ -188,7 +197,7 @@ h2 {
 	color: white;
 	font-size: 1.5em;
 /*	padding-bottom: 1px;*/
-	border-bottom: 1px solid black; /* change this color */
+	border-bottom: 1px solid #142a59; /* change this color */
 /*	margin: -0.67em; *//* h2 adopting padding of #message-center parent */
 	margin-bottom: 0.5em; /* h2 adopting padding of #message-center parent */
 	display: block;
