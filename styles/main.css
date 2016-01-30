@@ -43,11 +43,13 @@ body {
 #message-center {
 	width: 25%;
 	background-color: rgba(236, 238, 231, 0.4); /* same color as card */
-	padding: 1em;
+	padding: 0.6em;
+	padding-bottom: 2em;
 	height: 58.5%; /* THIS IS HARD CODED IN */
 	display: inline-block;
 /*	opacity: 0.4;*/
 	position: relative; /* for record counter */
+	overflow: scroll;
 	box-sizing: border-box;
 	transition: background-color 1.5s linear;
 }
@@ -57,13 +59,18 @@ body {
 /*	opacity: 0.85; */
 }
 
+#message-center p {
+	font-size: 0.8em;
+	padding: 3px;
+}
+
 #message-center:hover h2 {
 	color: #d82f4b; /* same color as .hidden card background color */
 }
 
 .record {
 	position: absolute;
-	bottom: 0;
+	bottom: 1em;
 } /* for record counter */
 
 #user-panel {
@@ -80,6 +87,7 @@ body {
 	width: 25%;
 	float: left;
 	padding: 0.5em;
+	position: relative; /* .record has absolute positioning over this div */
 /*	background-color: purple;*/
 	display: block;
 	box-sizing: border-box;
@@ -175,13 +183,19 @@ h1 {
 
 h2 {
 /*	background-color: #89c3c7;*/
-	padding: 0.3em;
+	padding: 0.8em 0 0 1em;
 	color: white;
+	font-size: 3em;
 	margin: -0.67em; /* h2 adopting padding of #message-center parent */
 	margin-bottom: 0.5em; /* h2 adopting padding of #message-center parent */
 	display: block;
 	transition: color 3s linear;
 } /* degrades around 947px */
+
+
+
+
+/* START MEDIA QUERIES */
 
 @media (max-width: 959px) {
 	/* minimum width is around 792... starts to look silly */
@@ -235,6 +249,5 @@ h2 {
 		width: 70%;
 		margin: 4em auto;
 	}
-
 
 } /* 405 will fit 2 cards */ 
