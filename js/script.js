@@ -216,6 +216,8 @@
 
       addCardValues(); // function adds the value of all cards in player's hand array
 
+      $("#hit").removeClass("disable-click"); // allows the player to use the hit button
+
       checkForBlackjack(); // checks player's hand sum for blackjack
 
       checkForBust(); // checks player's hand sum for bust
@@ -603,7 +605,7 @@
 
   var checkWinner = function() {
 
-    showHiddenCard(); 
+    showHiddenCard(); // possibly put into a set timeout function to delay reveal?
 
     checkDealerSum();
 
@@ -745,7 +747,7 @@
 
     $("#play").removeClass("disable-click"); // allows user to press play
 
-    $("#hit").removeClass("disable-click");
+    // $("#hit").removeClass("disable-click");
 
     $("#play").addClass("bet-first"); // forces user to place bet before pressing play
 
