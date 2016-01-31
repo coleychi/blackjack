@@ -1,7 +1,19 @@
 // $(function() { 
 
   // console.log("I'm running"); // confirms that 
+  // ==========
+  // MISC STUFF
+  // ----------
+  // Might be able to move this doen when window onload goes on?
 
+  var addNewMessage = function(message) {
+
+      var $messageDiv = $("#message-center"); // grabs div with id "message-center"
+      var $newMessage = $("<p>"); // creates new p tag
+      $newMessage.text(message); // sets innertext for p tags
+      $newMessage.appendTo($messageDiv);
+
+  }
 
   // =====================
   // PLAYER DEFAULT VALUES
@@ -174,11 +186,20 @@
   // play button generates user hand (draw two cards)
   var $playButton = $("#play"); // grabs element with id "play"
 
+  addNewMessage("Place a bet and then press play.");
+
+  // var $newMessage = $("<p>");
+  // $newMessage.text("Place a bet and then press play.");
+  // $("#message-center").append($newMessage);
+
   $playButton.click(function(){
 
     // console.log("this is this " + this); // checks correct item is selected
 
     if (!$(this).hasClass("disable-click") && !$(this).hasClass("bet-first")) {
+
+      $(".place-bet").addClass("disable-click");
+      
       // iteration runs twice
       for (i = 0; i < 2; i++) {
 
@@ -202,19 +223,19 @@
       $(this).addClass("disable-click"); // disables onclick function from firing
       // this.addClass.("clicked");
 
+      generateDealerHand(); // generates dealer hand
+
     } else if ($(this).hasClass("bet-first")) {
 
-        var $newMessage = $("<p>");
-        $newMessage.text("Place a bet first");
-        $("#message-center").append($newMessage);
+        addNewMessage("Place a bet first.");
 
     } else {
 
-        var $newMessage = $("<p>");
-        $newMessage.text("You were already dealt a hand!");
-        $("#message-center").append($newMessage);
+        addNewMessage("You were already dealt a hand! Press HIT or STAY to continue.");
 
       } // <-- closes if/else statement
+
+    // generates dealer hand
 
   }); // <-- closes playButton click function
 
@@ -240,11 +261,11 @@
 
     } else {
 
-        var $newMessage = $("<p>");
-        $newMessage.text("You can't have another card, silly!");
-        $("#message-center").append($newMessage);
+        addNewMessage("You can't have another card, silly!");
 
     } // <-- closes if statement
+
+    checkWinner();
 
   }); // <-- closes hitButton click function
 
@@ -256,11 +277,49 @@
 
     if (!$(this).hasClass("disable-click") && !$hitButton.hasClass("disable-click")) { // might be able to take this out
 
-      generateDealerHand(); // generates the dealer's hand
+      // generateDealerHand(); // generates the dealer's hand
+
+      while (dealer.handSum <= 17) { // generates new cards for dealer if hand is less than 17
+
+      drawRandomCard(); // draws random card from cards array
+
+      dealer.hand.push(pickedCard); // pushes the dealt card to dealer's hand
+
+      dealer.handSum += pickedCard.cardValue; // adds value of picked card to dealer's hand sum
+
+      console.log(dealer.handSum);
+
+      $createCard = $("<div class='card'>");
+
+      $createCard.appendTo($("#dealer"));
+
+      $cardNumber = $("<span class='card-name'>");
+
+      if(pickedCard.numberCard == false) {
+
+        $cardNumber.text(pickedCard.faceCard); // if the card is not a number, display face value in span
+
+        } else {
+
+        $cardNumber.text(pickedCard.numberCard); // if the card is a number, display number value in span
+
+      } // <-- closes if loop 
+
+    $createCard.append($cardNumber);
+
+    $cardSuit = $("<span class='card-suit'>");
+
+    $cardSuit.html(pickedCard.suit);
+
+    $createCard.append($cardSuit);
+
+    } // <-- closes while loop
 
       $(this).addClass("disable-click");
 
     }
+
+    checkWinner();
 
   }) // <-- closes stayButton function
 
@@ -277,41 +336,44 @@
   $placeBetButton.click(function(){ 
   // console.log(this); // confirms that this recognizes unique buttons
 
-    var $betAmount = $(this).text().replace(/\$/g, ''); // removes dollar sign
-    var integerBetAmount = parseInt($betAmount); // turns string into an integer that can be added/subtracted
-      // console.log(typeof($betAmount)); // this returns a string
-      // console.log(typeof(integerBetAmount)); // this returns an integer
-    // console.log($betAmount); // confirms that correct amount has been selected
+    if (!$(this).hasClass("disable-click")) {
 
-    player.balance -= integerBetAmount; // adjusts the player's balance 
-    player.currentBet += integerBetAmount; // adjusts the player's bet amount
 
-    // Checks that the math happened properly
-    // console.log(player.balance);
-    // console.log(player.currentBet);
+      var $betAmount = $(this).text().replace(/\$/g, ''); // removes dollar sign
+      var integerBetAmount = parseInt($betAmount); // turns string into an integer that can be added/subtracted
+        // console.log(typeof($betAmount)); // this returns a string
+        // console.log(typeof(integerBetAmount)); // this returns an integer
+      // console.log($betAmount); // confirms that correct amount has been selected
 
-    // sets the player's bet amount as the placeholder text in input bar
-    $betInputBar.attr("placeholder", player.currentBet);
+      player.balance -= integerBetAmount; // adjusts the player's balance 
+      player.currentBet += integerBetAmount; // adjusts the player's bet amount
 
-    // player cannot bet money that he does not have
-    if (player.balance <= 0) {
+      // Checks that the math happened properly
+      // console.log(player.balance);
+      // console.log(player.currentBet);
 
-      // console.log("NOPE"); // checks that if statement works
+      // sets the player's bet amount as the placeholder text in input bar
+      $betInputBar.attr("placeholder", player.currentBet);
 
-      $placeBetButton.prop("disabled", true); // disables button functionality
-      alert("YOU DON'T HAVE ENOUGH MONEY TO DO THAT!!!!"); // alerts player that there is no more money
+      // player cannot bet money that he does not have
+      if (player.balance <= 0) {
 
-    }; // <-- closes if statement
+        // console.log("NOPE"); // checks that if statement works
+
+        $placeBetButton.prop("disabled", true); // disables button functionality
+        alert("YOU DON'T HAVE ENOUGH MONEY TO DO THAT!!!!"); // alerts player that there is no more money
+
+      }; // <-- closes if statement
 
     // Updates message center with bet information
     var $playerBalance = $(".money"); // grabs span with class money
     $playerBalance.text(player.balance); // START AMOUNT IS HARDCODED INTO HTML
-    var $messageDiv = $("#message-center"); // grabs div with id "message-center"
-    var $newMessage = $("<p>"); // creates new p tag
-    $newMessage.text("You have placed your bet of " + player.currentBet); // sets innertext for p tags
-    $messageDiv.append($newMessage); // appends new paragraph to message div
+
+    addNewMessage("You have placed your bet of " + player.currentBet);
 
     $("#play").removeClass("bet-first"); // removes class "bet-first" so player can play
+
+    };
 
   }); // <-- closes placeBetButton click function
 
@@ -342,19 +404,15 @@
 
     dealer.handSum += pickedCard.cardValue;
 
-    while (dealer.handSum <= 17) {
+    drawRandomCard(); // draws random card from cards array
 
-      drawRandomCard(); // draws random card from cards array
+    dealer.hand.push(pickedCard);
 
-      dealer.hand.push(pickedCard); // pushes the dealt card to dealer's hand
+    $createCard = $("<div class='card'>");
 
-      dealer.handSum += pickedCard.cardValue; // adds value of picked card to dealer's hand sum
+    $createCard.appendTo($dealerSection);
 
-      console.log(dealer.handSum)
-
-      $createCard = $("<div class='card'>");
-
-      $createCard.appendTo($dealerSection);
+    dealer.handSum += pickedCard.cardValue;
 
       $cardNumber = $("<span class='card-name'>");
 
@@ -376,7 +434,41 @@
 
     $createCard.append($cardSuit);
 
-    } // <-- closes while loop
+    // while (dealer.handSum <= 17) {
+
+    //   drawRandomCard(); // draws random card from cards array
+
+    //   dealer.hand.push(pickedCard); // pushes the dealt card to dealer's hand
+
+    //   dealer.handSum += pickedCard.cardValue; // adds value of picked card to dealer's hand sum
+
+    //   console.log(dealer.handSum)
+
+    //   $createCard = $("<div class='card'>");
+
+    //   $createCard.appendTo($dealerSection);
+
+    //   $cardNumber = $("<span class='card-name'>");
+
+    //   if(pickedCard.numberCard == false) {
+
+    //     $cardNumber.text(pickedCard.faceCard); // if the card is not a number, display face value in span
+
+    //     } else {
+
+    //     $cardNumber.text(pickedCard.numberCard); // if the card is a number, display number value in span
+
+    //   } // <-- closes if loop 
+
+    // $createCard.append($cardNumber);
+
+    // $cardSuit = $("<span class='card-suit'>");
+
+    // $cardSuit.html(pickedCard.suit);
+
+    // $createCard.append($cardSuit);
+
+    // } // <-- closes while loop
 
   } // <-- closes generateDealerHand function
 
@@ -411,7 +503,7 @@
 
       player.hasBlackjack = true; // sets hasBlackjack key to true in player object
 
-      alert("BLACKJACK!");
+      alert("BLACKJACK!"); // comment this out
 
       // console.log(this)
 
@@ -427,7 +519,9 @@
 
       player.hasBust = true; // sets hasBust key to true in player object
 
-      alert("BUST!");
+      alert("BUST!"); // comment this out
+
+      // addNewMessage("You've busted.");
 
       $("#hit").addClass("disable-click");
 
@@ -437,5 +531,71 @@
 
   }; // <-- closes checkForBust function
 
+  var checkWinner = function() {
+
+    if ((player.hasBlackjack === true && dealer.hasBlackjack === true) || (player.handSum === dealer.handSum)) {
+      
+      player.balance += player.currentBet;
+
+      addNewMessage("It's a tie! Here's your money back.");
+
+    } else if ((player.hasBlackjack === true) || (player.handSum > dealer.handSum)) {
+
+      player.balance += (2 * player.currentBet);
+
+      addNewMessage("You won! $" + (2 * player.currentBet) + " has been added to your bank");
+
+    } else if (player.hasBust === true || player.cardValue > 21) {
+
+      addNewMessage("You busted.")
+
+    } else {
+
+      addNewMessage("Dealer wins!")
+
+    }
+
+    player.currentBet = 0; // resets current bet amount to 0
+
+    var $playerBalance = $(".money"); // grabs span with class money
+    $playerBalance.text(player.balance); // START AMOUNT IS HARDCODED INTO HTML
+
+  }
+
+  var newRound = function() {
+
+    player.hand = [];
+    player.handSum = null;
+    player.currentBet = null;
+    player.hasBlackjack = false; // might be able to take this out?
+    player.hasBust = false; // might be able to take this out?
+
+    dealer.hand = [];
+    dealer.handSum = null; 
+    dealer.hasBlackjack = false; // might be able to take this out?
+    dealer.hasBust = false; // might be able to take this out?
+
+    addNewMessage("Place a bet to play again!"); // prompts user to place a bet to play again
+
+    $("#player").empty();
+
+    $("#dealer").empty();
+
+    $(".place-bet").removeClass("disable-click"); // allows user to press bet buttons
+
+  }
+
+// // ==========
+// // MISC STUFF
+// // ----------
+
+// var addNewMessage = function(message) {
+
+//     var $messageDiv = $("#message-center"); // grabs div with id "message-center"
+//     var $newMessage = $("<p>"); // creates new p tag
+//     $newMessage.text(message); // sets innertext for p tags
+//     $newMessage.appendTo($messageDiv);
+
+// }
 
 // }); // <-- closes onload function
