@@ -27,6 +27,7 @@
     handSum: null, // lol handsome
     hasBlackjack: false, // might be able to take this out?
     hasBust: false, // might be able to take this out?
+    hasAce: false
 
   };
 
@@ -269,7 +270,10 @@
 
     } // <-- closes if statement
 
-    checkWinner();
+    // dealerDrawCards(); // dealer draws if dealer's hand's sum is less than 17
+
+    // checkWinner(); // this needs to be called later
+
 
   }); // <-- closes hitButton click function
 
@@ -283,45 +287,11 @@
 
       // generateDealerHand(); // generates the dealer's hand
 
-      while (dealer.handSum <= 17) { // generates new cards for dealer if hand is less than 17
-
-      drawRandomCard(); // draws random card from cards array
-
-      dealer.hand.push(pickedCard); // pushes the dealt card to dealer's hand
-
-      dealer.handSum += pickedCard.cardValue; // adds value of picked card to dealer's hand sum
-
-      console.log(dealer.handSum);
-
-      $createCard = $("<div class='card'>");
-
-      $createCard.appendTo($("#dealer"));
-
-      $cardNumber = $("<span class='card-name'>");
-
-      if(pickedCard.numberCard == false) {
-
-        $cardNumber.text(pickedCard.faceCard); // if the card is not a number, display face value in span
-
-        } else {
-
-        $cardNumber.text(pickedCard.numberCard); // if the card is a number, display number value in span
-
-      } // <-- closes if loop 
-
-    $createCard.append($cardNumber);
-
-    $cardSuit = $("<span class='card-suit'>");
-
-    $cardSuit.html(pickedCard.suit);
-
-    $createCard.append($cardSuit);
-
-    } // <-- closes while loop
-
       $(this).addClass("disable-click");
 
     }
+
+    dealerDrawCards(); // dealer draws if dealer's hand's sum is less than 17
 
     checkWinner();
 
@@ -391,6 +361,7 @@
     handSum: null, // lol handsome
     hasBlackjack: false, // might be able to take this out?
     hasBust: false, // might be able to take this out?
+    hasAce: false
 
   };
 
@@ -440,6 +411,93 @@
 
   } // <-- closes generateDealerHand function
 
+  var dealerDrawCards = function() {
+
+    while (dealer.handSum <= 17) { // generates new cards for dealer if hand is less than 17
+
+      drawRandomCard(); // draws random card from cards array
+
+      dealer.hand.push(pickedCard); // pushes the dealt card to dealer's hand
+
+      dealer.handSum += pickedCard.cardValue; // adds value of picked card to dealer's hand sum
+
+      console.log(dealer.handSum);
+
+      $createCard = $("<div class='card'>");
+
+      $createCard.appendTo($("#dealer"));
+
+      $cardNumber = $("<span class='card-name'>");
+
+      if(pickedCard.numberCard == false) {
+
+        $cardNumber.text(pickedCard.faceCard); // if the card is not a number, display face value in span
+
+        } else {
+
+        $cardNumber.text(pickedCard.numberCard); // if the card is a number, display number value in span
+
+      } // <-- closes if loop 
+
+    $createCard.append($cardNumber);
+
+    $cardSuit = $("<span class='card-suit'>");
+
+    $cardSuit.html(pickedCard.suit);
+
+    $createCard.append($cardSuit);
+
+    } // <-- closes while loop
+
+  }
+
+  var checkDealerSum = function() {
+
+    // check if dealer has an ace
+    for (var i = 0; i < dealer.hand.length; i++) {
+
+      if (dealer.hand[i].faceCard === "A") {
+
+        dealer.hasAce = true; // toggles has ace to true
+        // this.cardValue = 11; // changes card value of ace to 11
+        // console.log(player.hand)
+
+        dealer.handSum += 1; // recalculates card value (ace = 11)
+
+      } // <-- closes if statement
+
+    // check if dealer has blackjack
+
+      if (dealer.handSum === 21) {
+
+        console.log("dealer has a blackjack");
+        dealer.hasBlackjack = true; // toggles key to true
+
+      }; // <-- closes if statement
+
+    }; // <-- closes for loop
+
+    if (dealer.hasAce === true && dealer.handSum > 21) {
+
+      dealer.handSum -= 10; // subtract 10 from total value (so Ace is being played as 1);
+
+      if (dealer.handSum < 21) {
+
+        dealer.hasBust = false
+
+      }
+
+    } 
+
+    if (dealer.handSum > 21) {
+      console.log("dealer has busted");
+      dealer.hasBust = true;
+
+    }; // <-- closes if statement
+
+  }
+
+
 
   // ====================
   // BLACKJACK GAME LOGIC
@@ -461,7 +519,9 @@
 
     }
 
-      console.log(player.handSum);
+    checkForAce();
+
+    console.log(player.handSum);
 
   } // <-- closes addCardValues function
 
@@ -470,6 +530,8 @@
     if (player.handSum === 21) {
 
       player.hasBlackjack = true; // sets hasBlackjack key to true in player object
+
+      checkWinner();
 
       alert("BLACKJACK!"); // comment this out
 
@@ -487,6 +549,8 @@
 
       player.hasBust = true; // sets hasBust key to true in player object
 
+      checkWinner();
+
       alert("BUST!"); // comment this out
 
       // addNewMessage("You've busted.");
@@ -499,9 +563,49 @@
 
   }; // <-- closes checkForBust function
 
+  var checkForAce = function() {
+
+    for (var i = 0; i < player.hand.length; i++) {
+
+      if (player.hand[i].faceCard === "A") {
+
+        player.hasAce = true; // toggles has ace to true
+        // this.cardValue = 11; // changes card value of ace to 11
+        // console.log(player.hand)
+
+        player.handSum += 1; // recalculates card value (ace = 11)
+
+      } // <-- closes if statement
+
+      if (player.handSum === 21) {
+
+        player.hasBlackjack = true;
+
+      } // <-- closes if statement
+
+    } // <-- closes for loop
+
+    // checkForBust(); // checks for bust again
+
+  if (player.hasAce === true && player.handSum > 21) {
+
+    player.handSum -= 10; // subtract 10 from total value (so Ace is being played as 1)
+
+    if (player.handSum < 21) {
+
+      player.hasBust = false;
+
+    } // <-- closes if statement
+
+  } // <-- closes if statement
+
+  } // <-- closes checkForAce function
+
   var checkWinner = function() {
 
     showHiddenCard(); 
+
+    checkDealerSum();
 
     // checks winning conditions
     if ((player.hasBlackjack === true && dealer.hasBlackjack === true) || (player.handSum === dealer.handSum)) {
@@ -510,7 +614,7 @@
 
       addNewMessage("It's a tie! Here's your money back.");
 
-    } else if ((player.hasBlackjack === true) || (player.handSum > dealer.handSum)) {
+    } else if ((player.hasBlackjack === true) || ((player.handSum > dealer.handSum) && (player.hasBust == false))) {
 
       player.balance += (2 * player.currentBet);
 
@@ -520,9 +624,15 @@
 
       addNewMessage("You busted.")
 
+    } else if (dealer.hasBust === true) {
+
+      addNewMessage("Dealer busted. You win!");
+
+      player.balance += (2 * player.currentBet);
+
     } else {
 
-      addNewMessage("Dealer wins!")
+      addNewMessage("Dealer wins!");
 
     }
 
@@ -584,11 +694,11 @@
 
     $playAgainButton.click(function(){
 
-        newRound();
+        newRound(); // resets the game
 
-        $(".move-button").show();
+        $(".move-button").show(); // shows original three buttons
 
-        $(".now-what").hide();
+        $(".now-what").hide(); // hides now-what buttons
 
     }); // <-- closes playAgainButton click function
 
@@ -608,8 +718,7 @@
 
     }) // <-- closes leaveButton click function
 
-
-  }
+  } // <-- closes nowWhat function
 
   var newRound = function() {
 
@@ -618,11 +727,13 @@
     player.currentBet = null;
     player.hasBlackjack = false; // might be able to take this out?
     player.hasBust = false; // might be able to take this out?
+    player.hasAce = false;
 
     dealer.hand = [];
     dealer.handSum = null; 
     dealer.hasBlackjack = false; // might be able to take this out?
     dealer.hasBust = false; // might be able to take this out?
+    dealer.hasAce = false;
 
     addNewMessage("Place a bet to play again!"); // prompts user to place a bet to play again
 
@@ -631,6 +742,12 @@
     $("#dealer").empty();
 
     $(".place-bet").removeClass("disable-click"); // allows user to press bet buttons
+
+    $("#play").removeClass("disable-click"); // allows user to press play
+
+    $("#hit").removeClass("disable-click");
+
+    $("#play").addClass("bet-first"); // forces user to place bet before pressing play
 
   }
 
