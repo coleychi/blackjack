@@ -138,6 +138,20 @@ body {
 	margin-left: 5em;
 } /*sets margin for only first div*/
 
+.now-what {
+	width: 65px;
+	text-align: center;
+	padding: 1em;
+	background-color: #d6dadd;
+/*	border: 1px solid black;*/
+	display: inline-block;
+	border-radius: 50px;
+}
+
+.now-what:first-of-type {
+	margin-left: 5em;
+}
+
 .card {
 	width: 5.5em;
 	height: 7em;
@@ -204,7 +218,14 @@ h2 {
 	transition: color 3s linear;
 } /* degrades around 947px */
 
-
+#leaving {
+	display: block;
+	font-size: 1.5em;
+	color: white;
+	text-align: center;
+	width: 70%;
+	margin: 4em auto;
+}
 
 
 /* START MEDIA QUERIES */

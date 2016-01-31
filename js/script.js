@@ -188,6 +188,8 @@
 
   addNewMessage("Place a bet and then press play.");
 
+  // $(".now-what").hide(); // hides now what buttons
+
   // var $newMessage = $("<p>");
   // $newMessage.text("Place a bet and then press play.");
   // $("#message-center").append($newMessage);
@@ -199,7 +201,7 @@
     if (!$(this).hasClass("disable-click") && !$(this).hasClass("bet-first")) {
 
       $(".place-bet").addClass("disable-click");
-      
+
       // iteration runs twice
       for (i = 0; i < 2; i++) {
 
@@ -222,6 +224,8 @@
 
       $(this).addClass("disable-click"); // disables onclick function from firing
       // this.addClass.("clicked");
+
+      // $(this).hide(); // hides play button
 
       generateDealerHand(); // generates dealer hand
 
@@ -434,42 +438,6 @@
 
     $createCard.append($cardSuit);
 
-    // while (dealer.handSum <= 17) {
-
-    //   drawRandomCard(); // draws random card from cards array
-
-    //   dealer.hand.push(pickedCard); // pushes the dealt card to dealer's hand
-
-    //   dealer.handSum += pickedCard.cardValue; // adds value of picked card to dealer's hand sum
-
-    //   console.log(dealer.handSum)
-
-    //   $createCard = $("<div class='card'>");
-
-    //   $createCard.appendTo($dealerSection);
-
-    //   $cardNumber = $("<span class='card-name'>");
-
-    //   if(pickedCard.numberCard == false) {
-
-    //     $cardNumber.text(pickedCard.faceCard); // if the card is not a number, display face value in span
-
-    //     } else {
-
-    //     $cardNumber.text(pickedCard.numberCard); // if the card is a number, display number value in span
-
-    //   } // <-- closes if loop 
-
-    // $createCard.append($cardNumber);
-
-    // $cardSuit = $("<span class='card-suit'>");
-
-    // $cardSuit.html(pickedCard.suit);
-
-    // $createCard.append($cardSuit);
-
-    // } // <-- closes while loop
-
   } // <-- closes generateDealerHand function
 
 
@@ -533,6 +501,9 @@
 
   var checkWinner = function() {
 
+    showHiddenCard(); 
+
+    // checks winning conditions
     if ((player.hasBlackjack === true && dealer.hasBlackjack === true) || (player.handSum === dealer.handSum)) {
       
       player.balance += player.currentBet;
@@ -559,6 +530,84 @@
 
     var $playerBalance = $(".money"); // grabs span with class money
     $playerBalance.text(player.balance); // START AMOUNT IS HARDCODED INTO HTML
+
+    nowWhat(); // runs nowWhat function
+
+    // $(".move-button").hide(); // hides move-button options
+    // $(".now-what").show(); // reveals now-what options
+
+  }
+
+  // reveals the dealer's hidden card
+  var showHiddenCard = function() {
+
+    var dealerHiddenCard = dealer.hand[0];
+
+    // console.log(dealerHiddenCard); 
+
+    var $hiddenCard = $(".hidden-card");
+
+    $cardNumber = $("<span class='card-name'>");
+
+      if(dealerHiddenCard.numberCard == false) {
+
+        $cardNumber.text(dealerHiddenCard.faceCard); // if the card is not a number, display face value in span
+
+        } else {
+
+        $cardNumber.text(dealerHiddenCard.numberCard); // if the card is a number, display number value in span
+
+      } // <-- closes if loop 
+
+    $hiddenCard.append($cardNumber);
+
+    $cardSuit = $("<span class='card-suit'>");
+
+    $cardSuit.html(dealerHiddenCard.suit);
+
+    $hiddenCard.append($cardSuit);
+
+    $hiddenCard.removeClass("hidden-card")
+
+  }
+
+  var nowWhat = function() {
+
+    $(".move-button").hide(); // hides move-button options
+
+    var $playAgainButton = $("<button class='now-what'>"); // creates new button with class now what
+
+    $playAgainButton.text("Play Again");
+
+    $playAgainButton.appendTo("#player-move")
+
+
+    $playAgainButton.click(function(){
+
+        newRound();
+
+        $(".move-button").show();
+
+        $(".now-what").hide();
+
+    }); // <-- closes playAgainButton click function
+
+    var $leaveButton = $("<button class='now-what'>"); 
+
+    $leaveButton.text("Leave Now");
+
+    $leaveButton.appendTo("#player-move");
+
+    $leaveButton.click(function(){
+
+      $("#container").empty(); // empties the entire container div
+
+      var $newDiv = $("<div id='leaving'>");
+      $newDiv.text("Well. Bye then.");
+      $newDiv.appendTo($("#container"));
+
+    }) // <-- closes leaveButton click function
+
 
   }
 
