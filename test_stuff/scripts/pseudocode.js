@@ -42,4 +42,6 @@
 
 // might be able to take out .hasBust and .hasBlackjack keys in player object
 
+// slow down blackjack/cards being dealt/etc
+
 

@@ -2,28 +2,27 @@
 
   // console.log("I'm running"); // confirms that file is linked properly
 
-  // ==========
-  // MISC STUFF
-  // ----------
+  // =================
+  // DISPLAY FUNCTIONS
+  // -----------------
+
   // Might be able to move this doen when window onload goes on?
 
   // addNewMessage creates a new message to be added to the message-center div
   var addNewMessage = function(message) {
 
-      var $messageDiv = $("#message-center"); // grabs div with id "message-center"
-      var $newMessage = $("<p>"); // creates new p tag
-      $newMessage.text(message); // sets innertext for p tags
-      $newMessage.appendTo($messageDiv);
-
-  } // function to add a new message to message-center container 
+      var $newMessage = $("<p>").text(message).appendTo($("#message-center")); // creates new p tags for the message and appends it to the div
+       // $("#message-center").animate({scrollTop: $("#message-center")[0].scrollHeight}, 1000); // scrolls div to the bottom
+  
+  } // <-- closes addNewMessage function
 
   var newCard; // storing the whole div element of the new card in global scope to access later
 
   // createNewCard creates a card div with number and suit and stores it in newCard to be placed on screen
   var createNewCard = function() {
 
-    console.log("can i access picked card?"); 
-    console.log(pickedCard); // checking that function can access var pickedCard
+    // console.log("can i access picked card?"); 
+    // console.log(pickedCard); // checking that function can access var pickedCard
 
     $createCard = $("<div class='card'>"); // creates div with class "card"
 
@@ -51,6 +50,8 @@
 
   }; // <-- closes createNewCard function
 
+
+
   // =====================
   // PLAYER DEFAULT VALUES
   // ---------------------
@@ -61,14 +62,17 @@
     hand: [],
     balance: 500,
     currentBet: null,
-    handSum: null, // lol handsome
-    hasBlackjack: false, // might be able to take this out?
-    hasBust: false, // might be able to take this out?
+    handSum: null, 
+    hasBlackjack: false, 
+    hasBust: false, 
     hasAce: false,
     wins: 0,
     losses: 0,
     totalGames: 0
+
   };
+
+
 
   // ======================
   // GENERATE DECK OF CARDS
@@ -120,6 +124,7 @@
   } // <-- closes buildDeck function
 
 
+
   // ============== 
   // DEAL THE CARDS
   // --------------
@@ -135,46 +140,44 @@
   // selects card object from random index of cards array
   var drawRandomCard = function() {
 
+    // if there are more than 35 used cards, rebuild the deck
+    if (usedCardsCount > 35) {
 
-    console.log("forcing a blackjack")
-    // // if there are more than 35 used cards, rebuild the deck
-    // if (usedCardsCount > 35) {
+      for (var i = 0; i < cards.length; i++) {
 
-    //   for (var i = 0; i < cards.length; i++) {
+        cards[i].used = false; // resets all the cards used values to false 
 
-    //     cards[i].used = false; // resets all the cards used values to false 
+      } // <-- closes for loop
 
-    //   } // <-- closes for loop
+      usedCardsCount = 0; // resets counter to 0
 
-    //   usedCardsCount = 0; // resets counter to 0
+    } // <-- closes if statement    
 
-    // } // <-- closes if statement    
+    var arrayLength = cards.length; // stores length of array
 
-    // var arrayLength = cards.length; // stores length of array
+    var randomIndex = Math.floor(Math.random() * arrayLength); // generates random index position
 
-    // var randomIndex = Math.floor(Math.random() * arrayLength); // generates random index position
+    pickedCard = cards[randomIndex]; // pulls card using randomly generated index position
 
-    // pickedCard = cards[randomIndex]; // pulls card using randomly generated index position
-
-    // // console.log(cards[randomIndex]);
+    // console.log(cards[randomIndex]);
 
     // console.log(pickedCard); // confirming that pickedCard is the same as cards[randomIndex]
 
-    // while (pickedCard.used === true) {
+    while (pickedCard.used === true) {
 
-    //   newRandomIndex = Math.floor(Math.random() * arrayLength);
+      newRandomIndex = Math.floor(Math.random() * arrayLength);
 
-    //   pickedCard = cards[newRandomIndex];
+      pickedCard = cards[newRandomIndex];
 
-    //   console.log(pickedCard);
+      // console.log(pickedCard);
 
-    // } // <-- closes while loop
+    } // <-- closes while loop
 
-    //   // console.log(pickedCard); // checks if value of used has been toggled to true
+      // console.log(pickedCard); // checks if value of used has been toggled to true
 
-    // pickedCard.used = true; // is there a way to do toggle card using "this"?
+    pickedCard.used = true; // is there a way to do toggle card using "this"?
 
-    // usedCardsCount += 1; // adds 1 to usedCardsCount value
+    usedCardsCount += 1; // adds 1 to usedCardsCount value
 
   } // <-- closes drawRandomCard function
 
@@ -193,9 +196,9 @@
   } // <-- closes dealCard function
 
 
-  // =======
-  // BUTTONS
-  // -------
+  // ====================
+  // BUTTON FUNCTIONALITY
+  // --------------------
 
 
   // PLAY BUTTON---------------
@@ -230,6 +233,9 @@
       // This is called in addCardValues() so I don't need to re-call the function
       // checkForAce(); // checks player's hand sum for an ace
 
+      // needs to be first or dealer hand wont generate if player gets instant blackjack
+      generateDealerHand(); // generates dealer hand
+
       checkForBlackjack(); // checks player's hand sum for blackjack
 
       checkForBust(); // checks player's hand sum for bust
@@ -241,8 +247,6 @@
       // this.addClass.("clicked");
 
       // $(this).hide(); // hides play button
-
-      generateDealerHand(); // generates dealer hand
 
     } else if ($(this).hasClass("bet-first")) {
 
@@ -319,7 +323,6 @@
 
     if (!$(this).hasClass("disable-click")) {
 
-
       var $betAmount = $(this).text().replace(/\$/g, ''); // removes dollar sign
       var integerBetAmount = parseInt($betAmount); // turns string into an integer that can be added/subtracted
         // console.log(typeof($betAmount)); // this returns a string
@@ -348,7 +351,7 @@
 
     // Updates message center with bet information
     var $playerBalance = $(".money"); // grabs span with class money
-    $playerBalance.text("$" + player.balance); // START AMOUNT IS HARDCODED INTO HTML
+    $playerBalance.text("$" + player.balance); // places player's balance inside the span
 
     addNewMessage("You have placed your bet of $" + player.currentBet);
 
@@ -358,9 +361,11 @@
 
   }); // <-- closes placeBetButton click function
 
-  // =========================
-  // DEALER FUNCTION AND LOGIC
-  // -------------------------
+
+
+  // ==========================
+  // DEALER FUNCTIONS AND LOGIC
+  // -------------------------=
 
   var dealer = {
 
@@ -404,21 +409,21 @@
   // dealerDrawCards makes the dealer draw if hand total is less than or equal to 17
   var dealerDrawCards = function() {
 
-    while (dealer.handSum <= 17) { // generates new cards for dealer if hand is less than 17
+      while (dealer.handSum <= 17 && dealer.handSum <= player.handSum) { // generates new cards for dealer if hand is less than 17
 
-      drawRandomCard(); // draws random card from cards array
+        drawRandomCard(); // draws random card from cards array
 
-      dealer.hand.push(pickedCard); // pushes the dealt card to dealer's hand
+        dealer.hand.push(pickedCard); // pushes the dealt card to dealer's hand
 
-      dealer.handSum += pickedCard.cardValue; // adds value of picked card to dealer's hand sum
+        dealer.handSum += pickedCard.cardValue; // adds value of picked card to dealer's hand sum
 
-      // console.log(dealer.handSum);
+        // console.log(dealer.handSum);
 
-      createNewCard(); // creates a card div with the name and suit of the picked card
+        createNewCard(); // creates a card div with the name and suit of the picked card
 
-      $("#dealer").append(newCard); // adds the new card to the display
+        $("#dealer").append(newCard); // adds the new card to the display
 
-    } // <-- closes while loop
+      } // <-- closes while loop
 
   } // <-- closes dealerDrawCards function
 
@@ -431,7 +436,7 @@
 
       dealer.handSum += dealer.hand[i].cardValue;
 
-      console.log(dealer.handSum)
+      // console.log(dealer.handSum);
 
     } // <-- closes for loop
 
@@ -452,7 +457,7 @@
 
       if (dealer.handSum === 21) {
 
-        console.log("dealer has a blackjack");
+        // console.log("dealer has a blackjack");
         dealer.hasBlackjack = true; // toggles key to true
 
       }; // <-- closes if statement
@@ -472,12 +477,44 @@
     } // <-- closes if statement
 
     if (dealer.handSum > 21) {
-      console.log("dealer has busted");
+      // console.log("dealer has busted");
       dealer.hasBust = true;
 
     }; // <-- closes if statement
 
   }; // <-- closes dealerCheckSum
+
+  var showHiddenCard = function() {
+
+    var dealerHiddenCard = dealer.hand[0];
+
+    // console.log(dealerHiddenCard); 
+
+    var $hiddenCard = $(".hidden-card");
+
+    $cardNumber = $("<span class='card-name'>");
+
+      if(dealerHiddenCard.numberCard == false) {
+
+        $cardNumber.text(dealerHiddenCard.faceCard); // if the card is not a number, display face value in span
+
+        } else {
+
+        $cardNumber.text(dealerHiddenCard.numberCard); // if the card is a number, display number value in span
+
+      } // <-- closes if loop 
+
+    $hiddenCard.append($cardNumber);
+
+    $cardSuit = $("<span class='card-suit'>");
+
+    $cardSuit.html(dealerHiddenCard.suit);
+
+    $hiddenCard.append($cardSuit);
+
+    $hiddenCard.removeClass("hidden-card")
+
+  }
 
 
 
@@ -489,7 +526,7 @@
 
   var addCardValues = function () {
 
-    console.log(player.hand);
+    // console.log(player.hand); // checking players hand is registering
 
     player.handSum = 0; // resets player.handSum to zero (otherwise numbers add weirdly)
 
@@ -503,7 +540,7 @@
 
     checkForAce();
 
-    console.log(player.handSum);
+    // console.log(player.handSum); // confirming the math is coreect
 
   } // <-- closes addCardValues function
 
@@ -514,11 +551,11 @@
 
       player.hasBlackjack = true; // sets hasBlackjack key to true in player object
 
-      // dealerDrawCards(); // forces dealer to draw cards if player gets blackjack w/o pressing stay
+      dealerDrawCards(); // forces dealer to draw cards if player gets blackjack w/o pressing stay
 
       checkWinner();
 
-      alert("BLACKJACK!"); // comment this out
+      // alert("BLACKJACK!"); // comment this out
 
       // console.log(this)
 
@@ -537,7 +574,7 @@
 
       checkWinner();
 
-      alert("BUST!"); // comment this out
+      // alert("BUST!"); // comment this out
 
       // addNewMessage("You've busted.");
 
@@ -591,7 +628,11 @@
   // checks both hands and declares a winner
   var checkWinner = function() {
 
+    // setTimeout(showHiddenCard, 1000); // delays dealer's card reveal
+
     showHiddenCard(); // possibly put into a set timeout function to delay reveal?
+
+    // setTimeout(checkDealerSum, 1000); // delays dealer sum function
 
     checkDealerSum(); // checks dealer's sum 
 
@@ -645,55 +686,60 @@
     player.currentBet = 0; // resets current bet amount to 0
 
     var $playerBalance = $(".money"); // grabs span with class money
-    $playerBalance.text(player.balance); // START AMOUNT IS HARDCODED INTO HTML
+    $playerBalance.text("$" + player.balance); // START AMOUNT IS HARDCODED INTO HTML
 
     nowWhat(); // runs nowWhat function
 
-    // $(".move-button").hide(); // hides move-button options
-    // $(".now-what").show(); // reveals now-what options
-
   }
 
-  // reveals the dealer's hidden card
-  var showHiddenCard = function() {
+  // // reveals the dealer's hidden card
+  // var showHiddenCard = function() {
 
-    var dealerHiddenCard = dealer.hand[0];
+  //   var dealerHiddenCard = dealer.hand[0];
 
-    // console.log(dealerHiddenCard); 
+  //   // console.log(dealerHiddenCard); 
 
-    var $hiddenCard = $(".hidden-card");
+  //   var $hiddenCard = $(".hidden-card");
 
-    $cardNumber = $("<span class='card-name'>");
+  //   $cardNumber = $("<span class='card-name'>");
 
-      if(dealerHiddenCard.numberCard == false) {
+  //     if(dealerHiddenCard.numberCard == false) {
 
-        $cardNumber.text(dealerHiddenCard.faceCard); // if the card is not a number, display face value in span
+  //       $cardNumber.text(dealerHiddenCard.faceCard); // if the card is not a number, display face value in span
 
-        } else {
+  //       } else {
 
-        $cardNumber.text(dealerHiddenCard.numberCard); // if the card is a number, display number value in span
+  //       $cardNumber.text(dealerHiddenCard.numberCard); // if the card is a number, display number value in span
 
-      } // <-- closes if loop 
+  //     } // <-- closes if loop 
 
-    $hiddenCard.append($cardNumber);
+  //   $hiddenCard.append($cardNumber);
 
-    $cardSuit = $("<span class='card-suit'>");
+  //   $cardSuit = $("<span class='card-suit'>");
 
-    $cardSuit.html(dealerHiddenCard.suit);
+  //   $cardSuit.html(dealerHiddenCard.suit);
 
-    $hiddenCard.append($cardSuit);
+  //   $hiddenCard.append($cardSuit);
 
-    $hiddenCard.removeClass("hidden-card")
+  //   $hiddenCard.removeClass("hidden-card")
 
-  }
+  // }
+
+
+
+  // =====================
+  // END OF GAME FUNCTIONS
+  // ---------------------
 
   var nowWhat = function() {
+
+    promptNewGame();
 
     $(".move-button").hide(); // hides move-button options
 
     var $playAgainButton = $("<button class='now-what'>"); // creates new button with class now what
 
-    $playAgainButton.text("Play Again");
+    $playAgainButton.text("Next Round");
 
     $playAgainButton.appendTo("#player-move")
 
@@ -723,6 +769,22 @@
 
     }) // <-- closes leaveButton click function
 
+    var $resetGame = $("<button class='now-what'>"); 
+
+    $resetGame.text("Reset Game");
+
+    $resetGame.appendTo("#player-move");
+
+    $resetGame.click(function(){
+
+      resetAll();
+
+      $(".move-button").show(); // shows original three buttons
+
+      $(".now-what").hide(); // hides now-what buttons
+
+    }) // <-- closes resetGame click function
+
   } // <-- closes nowWhat function
 
   var newRound = function() {
@@ -743,7 +805,6 @@
     addNewMessage("Place a bet to play again!"); // prompts user to place a bet to play again
 
     $("#player").empty();
-
     $("#dealer").empty();
 
     $(".place-bet").removeClass("disable-click"); // allows user to press bet buttons
@@ -753,6 +814,69 @@
     // $("#hit").removeClass("disable-click");
 
     $("#play").addClass("bet-first"); // forces user to place bet before pressing play
+
+  } // <-- closes newRound function
+
+  var resetAll = function() {
+
+    newRound(); 
+
+    player.balance = 500;
+
+    var $playerBalance = $(".money").text("$" + player.balance); // grabs span with class money
+
+    // resets all the cards in the deck to unused
+    for (var i = 0; i < cards.length; i++) {
+
+      cards[i].used = false; // resets all the cards used values to false 
+
+    } // <-- closes for loop
+
+    usedCardsCount = 0; // resets counter to 0
+
+    player.wins = 0;
+    player.losses = 0;
+    player.totalGames = 0;
+
+  } // <-- closes resetAll function
+
+  var promptNewGame = function() {
+
+    if(player.balance <= 0) {
+
+      $("#dealer").empty();
+      $("#player").empty();
+
+      $newDiv = $("<div id='new-game'>").appendTo("#dealer");
+      $newParagraph = $("<p>").html("You're out of money... <br> Do you want to start over?").appendTo($newDiv);
+      $resetGameButton = $("<button class='now-what'>").text("Start over").appendTo($newDiv);
+      
+      $resetGameButton.click(function(){
+
+          alert("You probably have a gambling problem.")
+
+          resetAll();
+
+          $placeBetButton.prop("disabled", false); // unlocks bet buttons
+
+        $(".move-button").show(); // shows original three buttons
+        $(".now-what").hide(); // hides now-what buttons
+
+      }) // <-- closes resetGame click function
+
+      $leaveGameButton = $("<button class='now-what'>").text("Leave game").appendTo($newDiv);
+
+      $leaveGameButton.click(function(){
+
+        $("#container").empty(); // empties the entire container div
+
+        var $newDiv = $("<div id='leaving'>");
+        $newDiv.text("Well. Bye then.");
+        $newDiv.appendTo($("#container"));
+
+      }) // <-- closes leaveButton click function
+
+    }
 
   }
 

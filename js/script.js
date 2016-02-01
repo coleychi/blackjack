@@ -2,28 +2,22 @@
 
   // console.log("I'm running"); // confirms that file is linked properly
 
-  // ==========
-  // MISC STUFF
-  // ----------
-  // Might be able to move this doen when window onload goes on?
+  // =================
+  // DISPLAY FUNCTIONS
+  // -----------------
 
-  // addNewMessage creates a new message to be added to the message-center div
+  // creates a new message to be added to the message-center div
   var addNewMessage = function(message) {
 
-      var $messageDiv = $("#message-center"); // grabs div with id "message-center"
-      var $newMessage = $("<p>"); // creates new p tag
-      $newMessage.text(message); // sets innertext for p tags
-      $newMessage.appendTo($messageDiv); // appends paragraph to div
-      // $("#message-center").animate({scrollTop: $("#message-center")[0].scrollHeight}, 1000); // scrolls div to the bottom
+      var $newMessage = $("<p>").text(message).appendTo($("#message-center")); // creates new p tags for the message and appends it to the div
+       // $("#message-center").animate({scrollTop: $("#message-center")[0].scrollHeight}, 1000); // scrolls div to the bottom
+  
   } // <-- closes addNewMessage function
 
   var newCard; // storing the whole div element of the new card in global scope to access later
 
-  // createNewCard creates a card div with number and suit and stores it in newCard to be placed on screen
+  // creates a card div with number and suit and stores it in newCard to be placed on screen
   var createNewCard = function() {
-
-    // console.log("can i access picked card?"); 
-    // console.log(pickedCard); // checking that function can access var pickedCard
 
     $createCard = $("<div class='card'>"); // creates div with class "card"
 
@@ -41,15 +35,13 @@
 
     $createCard.append($cardName); // appends span with name to card div
 
-    $cardSuit = $("<span class='card-suit'>"); // creates span with class "card-suit" where suit will display
-
-    $cardSuit.html(pickedCard.suit); // adds suit inside the span tags
-
-    $createCard.append($cardSuit); // appends span with suit to card div
+    $cardSuit = $("<span class='card-suit'>").html(pickedCard.suit).appendTo($createCard); // creates span with class "card-suit" where suit will display
 
     newCard = $createCard; // stores the entire div (with name and suit) in newCard variable to be accessed and placeed later
 
   }; // <-- closes createNewCard function
+
+
 
   // =====================
   // PLAYER DEFAULT VALUES
@@ -61,15 +53,17 @@
     hand: [],
     balance: 500,
     currentBet: null,
-    handSum: null, // lol handsome
-    hasBlackjack: false, // might be able to take this out?
-    hasBust: false, // might be able to take this out?
+    handSum: null, 
+    hasBlackjack: false, 
+    hasBust: false, 
     hasAce: false,
     wins: 0,
     losses: 0,
     totalGames: 0
 
   };
+
+
 
   // ======================
   // GENERATE DECK OF CARDS
@@ -121,6 +115,7 @@
   } // <-- closes buildDeck function
 
 
+
   // ============== 
   // DEAL THE CARDS
   // --------------
@@ -155,21 +150,13 @@
 
     pickedCard = cards[randomIndex]; // pulls card using randomly generated index position
 
-    // console.log(cards[randomIndex]);
-
-    // console.log(pickedCard); // confirming that pickedCard is the same as cards[randomIndex]
-
     while (pickedCard.used === true) {
 
       newRandomIndex = Math.floor(Math.random() * arrayLength);
 
       pickedCard = cards[newRandomIndex];
 
-      // console.log(pickedCard);
-
     } // <-- closes while loop
-
-      // console.log(pickedCard); // checks if value of used has been toggled to true
 
     pickedCard.used = true; // is there a way to do toggle card using "this"?
 
@@ -187,14 +174,12 @@
 
     $("#player").append(newCard); // places newCard in #player section
 
-    // console.log(newCard); // confirms that newCard is the entire div with the name and suit spans included
-
   } // <-- closes dealCard function
 
 
-  // =======
-  // BUTTONS
-  // -------
+  // ====================
+  // BUTTON FUNCTIONALITY
+  // --------------------
 
 
   // PLAY BUTTON---------------
@@ -204,8 +189,6 @@
 
   // play button generates user hand on click
   $playButton.click(function(){
-
-    // console.log("this is this " + this); // checks correct item is selected
 
     if (!$(this).hasClass("disable-click") && !$(this).hasClass("bet-first")) {
 
@@ -220,14 +203,11 @@
 
         player.hand.push(pickedCard); // pushes the dealt card to player's hand
 
-      } 
+      } // <-- closes for loop
 
       addCardValues(); // function adds the value of all cards in player's hand array
 
       $("#hit").removeClass("disable-click"); // allows the player to use the hit button
-
-      // This is called in addCardValues() so I don't need to re-call the function
-      // checkForAce(); // checks player's hand sum for an ace
 
       // needs to be first or dealer hand wont generate if player gets instant blackjack
       generateDealerHand(); // generates dealer hand
@@ -236,13 +216,7 @@
 
       checkForBust(); // checks player's hand sum for bust
 
-      // console.log(this);
-      // console.log($(this));
-
       $(this).addClass("disable-click"); // disables onclick function from firing
-      // this.addClass.("clicked");
-
-      // $(this).hide(); // hides play button
 
     } else if ($(this).hasClass("bet-first")) {
 
@@ -315,31 +289,20 @@
   var $betInputBar = $("#bet-input");
 
   $placeBetButton.click(function(){ 
-  // console.log(this); // confirms that this recognizes unique buttons
 
     if (!$(this).hasClass("disable-click")) {
 
-
       var $betAmount = $(this).text().replace(/\$/g, ''); // removes dollar sign
       var integerBetAmount = parseInt($betAmount); // turns string into an integer that can be added/subtracted
-        // console.log(typeof($betAmount)); // this returns a string
-        // console.log(typeof(integerBetAmount)); // this returns an integer
-      // console.log($betAmount); // confirms that correct amount has been selected
 
       player.balance -= integerBetAmount; // adjusts the player's balance 
       player.currentBet += integerBetAmount; // adjusts the player's bet amount
-
-      // Checks that the math happened properly
-      // console.log(player.balance);
-      // console.log(player.currentBet);
 
       // sets the player's bet amount as the placeholder text in input bar
       $betInputBar.attr("placeholder", player.currentBet);
 
       // player cannot bet money that he does not have
       if (player.balance <= 0) {
-
-        // console.log("NOPE"); // checks that if statement works
 
         $placeBetButton.prop("disabled", true); // disables button functionality
         alert("YOU DON'T HAVE ENOUGH MONEY TO DO THAT!!!!"); // alerts player that there is no more money
@@ -348,7 +311,7 @@
 
     // Updates message center with bet information
     var $playerBalance = $(".money"); // grabs span with class money
-    $playerBalance.text("$" + player.balance); // START AMOUNT IS HARDCODED INTO HTML
+    $playerBalance.text("$" + player.balance); // places player's balance inside the span
 
     addNewMessage("You have placed your bet of $" + player.currentBet);
 
@@ -358,9 +321,11 @@
 
   }); // <-- closes placeBetButton click function
 
-  // =========================
-  // DEALER FUNCTION AND LOGIC
-  // -------------------------
+
+
+  // ==========================
+  // DEALER FUNCTIONS AND LOGIC
+  // -------------------------=
 
   var dealer = {
 
@@ -385,13 +350,9 @@
 
     $createSecretCard.appendTo($dealerSection); // appends first card to dealer's section
 
-    // dealer.handSum += pickedCard.cardValue; // adds value of secret card to dealer's hand total
-
     drawRandomCard(); // draws random card from cards array
 
     dealer.hand.push(pickedCard); // pushes the deal card to dealer's hand
-
-    // dealer.handSum += pickedCard.cardValue; // adds value of shown card to dealer's hand total
 
     checkDealerSum();
 
@@ -412,8 +373,6 @@
 
         dealer.handSum += pickedCard.cardValue; // adds value of picked card to dealer's hand sum
 
-        // console.log(dealer.handSum);
-
         createNewCard(); // creates a card div with the name and suit of the picked card
 
         $("#dealer").append(newCard); // adds the new card to the display
@@ -431,8 +390,6 @@
 
       dealer.handSum += dealer.hand[i].cardValue;
 
-      // console.log(dealer.handSum);
-
     } // <-- closes for loop
 
     // check if dealer has an ace
@@ -441,18 +398,14 @@
       if (dealer.hand[i].faceCard === "A") {
 
         dealer.hasAce = true; // toggles has ace to true
-        // this.cardValue = 11; // changes card value of ace to 11
-        // console.log(player.hand)
 
         dealer.handSum += 1; // recalculates card value (ace = 11)
 
       } // <-- closes if statement
 
     // check if dealer has blackjack
-
       if (dealer.handSum === 21) {
 
-        // console.log("dealer has a blackjack");
         dealer.hasBlackjack = true; // toggles key to true
 
       }; // <-- closes if statement
@@ -472,12 +425,42 @@
     } // <-- closes if statement
 
     if (dealer.handSum > 21) {
-      // console.log("dealer has busted");
+
       dealer.hasBust = true;
 
     }; // <-- closes if statement
 
   }; // <-- closes dealerCheckSum
+
+  var showHiddenCard = function() {
+
+    var dealerHiddenCard = dealer.hand[0];
+
+    var $hiddenCard = $(".hidden-card");
+
+    $cardNumber = $("<span class='card-name'>");
+
+      if(dealerHiddenCard.numberCard == false) {
+
+        $cardNumber.text(dealerHiddenCard.faceCard); // if the card is not a number, display face value in span
+
+        } else {
+
+        $cardNumber.text(dealerHiddenCard.numberCard); // if the card is a number, display number value in span
+
+      } // <-- closes if loop 
+
+    $hiddenCard.append($cardNumber);
+
+    $cardSuit = $("<span class='card-suit'>");
+
+    $cardSuit.html(dealerHiddenCard.suit);
+
+    $hiddenCard.append($cardSuit);
+
+    $hiddenCard.removeClass("hidden-card")
+
+  }
 
 
 
@@ -485,25 +468,19 @@
   // BLACKJACK GAME LOGIC
   // --------------------
 
-  // adds card values // CHANGE PLAYER TO THIS TO REUSE THIS FUNCTION FOR THE DEALER?
-
+  // adds card values
   var addCardValues = function () {
 
-    // console.log(player.hand); // checking players hand is registering
 
     player.handSum = 0; // resets player.handSum to zero (otherwise numbers add weirdly)
 
     for (i = 0; i < player.hand.length; i++) {
-
-      // console.log(player.hand[i].cardValue);
 
       player.handSum += player.hand[i].cardValue; // add card value to player's hand sum
 
     }
 
     checkForAce();
-
-    // console.log(player.handSum); // confirming the math is coreect
 
   } // <-- closes addCardValues function
 
@@ -517,10 +494,6 @@
       dealerDrawCards(); // forces dealer to draw cards if player gets blackjack w/o pressing stay
 
       checkWinner();
-
-      // alert("BLACKJACK!"); // comment this out
-
-      // console.log(this)
 
       $("#hit").addClass("disable-click");
 
@@ -537,15 +510,9 @@
 
       checkWinner();
 
-      // alert("BUST!"); // comment this out
-
-      // addNewMessage("You've busted.");
-
       $("#hit").addClass("disable-click");
 
     };
-
-    // console.log(player)
 
   }; // <-- closes checkForBust function
 
@@ -556,8 +523,6 @@
       if (player.hand[i].faceCard === "A") {
 
         player.hasAce = true; // toggles has ace to true
-        // this.cardValue = 11; // changes card value of ace to 11
-        // console.log(player.hand)
 
         player.handSum += 1; // recalculates card value (ace = 11)
 
@@ -570,8 +535,6 @@
       } // <-- closes if statement
 
     } // <-- closes for loop
-
-    // checkForBust(); // checks for bust again
 
   if (player.hasAce === true && player.handSum > 21) {
 
@@ -590,8 +553,6 @@
 
   // checks both hands and declares a winner
   var checkWinner = function() {
-
-    // setTimeout(showHiddenCard, 1000); // delays dealer's card reveal
 
     showHiddenCard(); // possibly put into a set timeout function to delay reveal?
 
@@ -651,43 +612,12 @@
 
     nowWhat(); // runs nowWhat function
 
-    // $(".move-button").hide(); // hides move-button options
-    // $(".now-what").show(); // reveals now-what options
-
   }
 
-  // reveals the dealer's hidden card
-  var showHiddenCard = function() {
 
-    var dealerHiddenCard = dealer.hand[0];
-
-    // console.log(dealerHiddenCard); 
-
-    var $hiddenCard = $(".hidden-card");
-
-    $cardNumber = $("<span class='card-name'>");
-
-      if(dealerHiddenCard.numberCard == false) {
-
-        $cardNumber.text(dealerHiddenCard.faceCard); // if the card is not a number, display face value in span
-
-        } else {
-
-        $cardNumber.text(dealerHiddenCard.numberCard); // if the card is a number, display number value in span
-
-      } // <-- closes if loop 
-
-    $hiddenCard.append($cardNumber);
-
-    $cardSuit = $("<span class='card-suit'>");
-
-    $cardSuit.html(dealerHiddenCard.suit);
-
-    $hiddenCard.append($cardSuit);
-
-    $hiddenCard.removeClass("hidden-card")
-
-  }
+  // =====================
+  // END OF GAME FUNCTIONS
+  // ---------------------
 
   var nowWhat = function() {
 
@@ -768,8 +698,6 @@
     $(".place-bet").removeClass("disable-click"); // allows user to press bet buttons
 
     $("#play").removeClass("disable-click"); // allows user to press play
-
-    // $("#hit").removeClass("disable-click");
 
     $("#play").addClass("bet-first"); // forces user to place bet before pressing play
 
