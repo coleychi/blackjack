@@ -150,6 +150,7 @@
 
     pickedCard = cards[randomIndex]; // pulls card using randomly generated index position
 
+    // draw another card is the pickedCard has been used already
     while (pickedCard.used === true) {
 
       newRandomIndex = Math.floor(Math.random() * arrayLength);
@@ -177,10 +178,10 @@
   }; // <-- closes dealCard function
 
 
+
   // ====================
   // BUTTON FUNCTIONALITY
   // --------------------
-
 
   // PLAY BUTTON---------------
   var $playButton = $("#play"); // grabs element with id "play"
@@ -213,6 +214,12 @@
       generateDealerHand(); // generates dealer hand
 
       checkForBlackjack(); // checks player's hand sum for blackjack
+
+      if (player.hasBlackjack === true) {
+
+        alert("YOU HAVE BLACKJACK!");
+
+      }; // alerts the player if he receives blackjack on initial draw (outcome happens instantly)
 
       checkForBust(); // checks player's hand sum for bust
 
@@ -434,6 +441,7 @@
   }; // <-- closes dealerCheckSum
 
 
+  // reveals the dealer's hidden card
   var showHiddenCard = function() {
 
     var dealerHiddenCard = dealer.hand[0];
@@ -470,7 +478,7 @@
   // BLACKJACK GAME LOGIC
   // --------------------
 
-  // adds card values
+  // adds card values in player's hand
   var addCardValues = function () {
 
     player.handSum = 0; // resets player.handSum to zero (otherwise numbers add weirdly)
@@ -680,7 +688,7 @@
 
   } // <-- closes nowWhat function
 
-
+  // clears appropriate keys in player and dealer objects to prepare for the next round
   var newRound = function() {
 
     player.hand = [];
@@ -703,6 +711,8 @@
 
     $(".place-bet").removeClass("disable-click"); // allows user to press bet buttons
 
+    $("#hit").addClass("disable-click"); // user cannot press hit
+
     $("#play").removeClass("disable-click"); // allows user to press play
 
     $("#play").addClass("bet-first"); // forces user to place bet before pressing play
@@ -710,6 +720,7 @@
   } // <-- closes newRound function
 
 
+  // resets the entire game. the player begins with initial start amount and wins, losses, and total games are cleared
   var resetAll = function() {
 
     newRound(); 
@@ -734,6 +745,7 @@
   } // <-- closes resetAll function
 
 
+  // asks user how he wants to continue upon losing all his money
   var promptNewGame = function() {
 
     if(player.balance <= 0) {
@@ -747,7 +759,7 @@
       
       $resetGameButton.click(function(){
 
-          alert("You probably have a gambling problem.")
+          alert("You have a gambling problem.")
 
           resetAll();
 
@@ -774,6 +786,8 @@
 
   }; // <-- closes promptNewGame function
 
+
+  // gives player some extra money when certain conditions are reached
   var moneyEvent = function() {
 
     if ((player.totalGames >= 15) && (player.freeloader === false) && (player.losses > (player.wins * 3))) {

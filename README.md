@@ -16,9 +16,14 @@ A basic blackjack game. User begins with $500 and plays 1v1 against the dealer.
 
 ## Future Implementations
 - Dealer's hidden card flips on a delay
+- Dealer's drawn cards appear on a delay
 - User can manually input the amount they want to bet in the input box
 - Make CSS more responsive by making the game functional on smaller screens
 - Adding multiplayer functionality
+
+## Known Issues
+- Dealer's hand reveals almost instantly if player has a blackjack on the initial hand
+- Duplicate game logic (player and dealer conditions are defined separately)
 
 ## Notes
 - Author: Nicole Chiang
