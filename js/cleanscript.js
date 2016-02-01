@@ -365,8 +365,6 @@
     $(".place-bet").removeClass("disable-click"); 
     $("#play").removeClass("disable-click"); 
     $("#play").addClass("bet-first"); 
-
   }
-
-
+  
 // }); // <-- closes onload function

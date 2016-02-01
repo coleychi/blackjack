@@ -37,7 +37,7 @@
 
       $cardName.text(pickedCard.numberCard); // if the card is a number, display number value in span
 
-    }
+    };
 
     $createCard.append($cardName); // appends span with name to card div
 
@@ -49,7 +49,7 @@
 
     newCard = $createCard; // stores the entire div (with name and suit) in newCard variable to be accessed and placeed later
 
-  } // <-- closes createNewCard function
+  }; // <-- closes createNewCard function
 
   // =====================
   // PLAYER DEFAULT VALUES
@@ -82,7 +82,7 @@
     this.numberCard = number; // 2, 3, 4, 5, 6, 7, 8, 9, 10
     this.cardValue = cardValue; // sets numeric card value on card
 
-  } // closes constructor function
+  }; // closes constructor function
 
   var cards = []; // empty array for new cards to be pushed into
 
@@ -103,16 +103,16 @@
 
         cards.push(new Card(false, suits[i], false, numbers[j], numbers[j])); // pushes card to cards array
 
-      } // <-- closes numbers.length for loop
+      }; // <-- closes numbers.length for loop
 
       // creating face cards for selected suit and pushing into cards array
       for (var j = 0; j < face.length; j++) {
 
         cards.push(new Card(false, suits[i], face[j], false, 10)); // pushes card to cards array
 
-      } // <-- closes numbers.length for loop 
+      }; // <-- closes numbers.length for loop 
 
-    } // <-- closes suits for loop
+    }; // <-- closes suits for loop
 
     return cards;
 
@@ -511,6 +511,8 @@
 
       player.hasBlackjack = true; // sets hasBlackjack key to true in player object
 
+      dealerDrawCards(); // forces dealer to draw cards if player gets blackjack w/o pressing stay
+
       checkWinner();
 
       alert("BLACKJACK!"); // comment this out
@@ -588,7 +590,7 @@
 
     showHiddenCard(); // possibly put into a set timeout function to delay reveal?
 
-    checkDealerSum(); // 
+    checkDealerSum(); // checks dealer's sum 
 
     // checks winning conditions
     if ((player.hasBlackjack === true && dealer.hasBlackjack === true) || (player.handSum === dealer.handSum)) {
