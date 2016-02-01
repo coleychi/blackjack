@@ -157,7 +157,7 @@
 
     // console.log(cards[randomIndex]);
 
-    console.log(pickedCard); // confirming that pickedCard is the same as cards[randomIndex]
+    // console.log(pickedCard); // confirming that pickedCard is the same as cards[randomIndex]
 
     while (pickedCard.used === true) {
 
@@ -165,7 +165,7 @@
 
       pickedCard = cards[newRandomIndex];
 
-      console.log(pickedCard);
+      // console.log(pickedCard);
 
     } // <-- closes while loop
 
@@ -229,7 +229,7 @@
       // This is called in addCardValues() so I don't need to re-call the function
       // checkForAce(); // checks player's hand sum for an ace
 
-      // needs to be first or dealer hand wont generate if player gets instand blackjack
+      // needs to be first or dealer hand wont generate if player gets instant blackjack
       generateDealerHand(); // generates dealer hand
 
       checkForBlackjack(); // checks player's hand sum for blackjack
@@ -404,21 +404,21 @@
   // dealerDrawCards makes the dealer draw if hand total is less than or equal to 17
   var dealerDrawCards = function() {
 
-    while (dealer.handSum <= 17) { // generates new cards for dealer if hand is less than 17
+      while (dealer.handSum <= 17 && dealer.handSum <= player.handSum) { // generates new cards for dealer if hand is less than 17
 
-      drawRandomCard(); // draws random card from cards array
+        drawRandomCard(); // draws random card from cards array
 
-      dealer.hand.push(pickedCard); // pushes the dealt card to dealer's hand
+        dealer.hand.push(pickedCard); // pushes the dealt card to dealer's hand
 
-      dealer.handSum += pickedCard.cardValue; // adds value of picked card to dealer's hand sum
+        dealer.handSum += pickedCard.cardValue; // adds value of picked card to dealer's hand sum
 
-      // console.log(dealer.handSum);
+        // console.log(dealer.handSum);
 
-      createNewCard(); // creates a card div with the name and suit of the picked card
+        createNewCard(); // creates a card div with the name and suit of the picked card
 
-      $("#dealer").append(newCard); // adds the new card to the display
+        $("#dealer").append(newCard); // adds the new card to the display
 
-    } // <-- closes while loop
+      } // <-- closes while loop
 
   } // <-- closes dealerDrawCards function
 
@@ -431,7 +431,7 @@
 
       dealer.handSum += dealer.hand[i].cardValue;
 
-      console.log(dealer.handSum)
+      // console.log(dealer.handSum);
 
     } // <-- closes for loop
 
@@ -452,7 +452,7 @@
 
       if (dealer.handSum === 21) {
 
-        console.log("dealer has a blackjack");
+        // console.log("dealer has a blackjack");
         dealer.hasBlackjack = true; // toggles key to true
 
       }; // <-- closes if statement
@@ -472,7 +472,7 @@
     } // <-- closes if statement
 
     if (dealer.handSum > 21) {
-      console.log("dealer has busted");
+      // console.log("dealer has busted");
       dealer.hasBust = true;
 
     }; // <-- closes if statement
@@ -489,7 +489,7 @@
 
   var addCardValues = function () {
 
-    console.log(player.hand);
+    // console.log(player.hand); // checking players hand is registering
 
     player.handSum = 0; // resets player.handSum to zero (otherwise numbers add weirdly)
 
@@ -503,7 +503,7 @@
 
     checkForAce();
 
-    console.log(player.handSum);
+    // console.log(player.handSum); // confirming the math is coreect
 
   } // <-- closes addCardValues function
 
@@ -514,11 +514,11 @@
 
       player.hasBlackjack = true; // sets hasBlackjack key to true in player object
 
-      // dealerDrawCards(); // forces dealer to draw cards if player gets blackjack w/o pressing stay
+      dealerDrawCards(); // forces dealer to draw cards if player gets blackjack w/o pressing stay
 
       checkWinner();
 
-      alert("BLACKJACK!"); // comment this out
+      // alert("BLACKJACK!"); // comment this out
 
       // console.log(this)
 
@@ -537,7 +537,7 @@
 
       checkWinner();
 
-      alert("BUST!"); // comment this out
+      // alert("BUST!"); // comment this out
 
       // addNewMessage("You've busted.");
 
@@ -763,7 +763,6 @@
     addNewMessage("Place a bet to play again!"); // prompts user to place a bet to play again
 
     $("#player").empty();
-
     $("#dealer").empty();
 
     $(".place-bet").removeClass("disable-click"); // allows user to press bet buttons
@@ -801,7 +800,7 @@
 
   var promptNewGame = function() {
 
-    // if(player.balance <= 0) {
+    if(player.balance <= 0) {
 
       $("#dealer").empty();
       $("#player").empty();
@@ -819,7 +818,6 @@
           $placeBetButton.prop("disabled", false); // unlocks bet buttons
 
         $(".move-button").show(); // shows original three buttons
-
         $(".now-what").hide(); // hides now-what buttons
 
       }) // <-- closes resetGame click function
@@ -836,7 +834,7 @@
 
       }) // <-- closes leaveButton click function
 
-    // }
+    }
 
   }
 
