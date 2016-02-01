@@ -64,10 +64,11 @@
     handSum: null, // lol handsome
     hasBlackjack: false, // might be able to take this out?
     hasBust: false, // might be able to take this out?
-    hasAce: false
-
+    hasAce: false,
+    wins: 0,
+    losses: 0,
+    totalGames: 0
   };
-
 
   // ======================
   // GENERATE DECK OF CARDS
@@ -511,7 +512,7 @@
 
       player.hasBlackjack = true; // sets hasBlackjack key to true in player object
 
-      dealerDrawCards(); // forces dealer to draw cards if player gets blackjack w/o pressing stay
+      // dealerDrawCards(); // forces dealer to draw cards if player gets blackjack w/o pressing stay
 
       checkWinner();
 
@@ -599,15 +600,25 @@
 
       addNewMessage("It's a tie! Here's your money back.");
 
+      player.totalGames += 1; // adds one to player's total games tally
+
     } else if ((player.hasBlackjack === true) || ((player.handSum > dealer.handSum) && (player.hasBust == false))) {
 
       player.balance += (2 * player.currentBet);
 
       addNewMessage("You won! $" + (2 * player.currentBet) + " has been added to your bank");
 
+      player.wins += 1; // adds one to player's win tally
+
+      player.totalGames += 1; // adds one to player's total games tally
+
     } else if (player.hasBust === true || player.cardValue > 21) {
 
-      addNewMessage("You busted.")
+      addNewMessage("You busted.");
+
+      player.losses += 1; // adds one to player's losses tally
+
+      player.totalGames += 1; // adds one to player's total games tally
 
     } else if (dealer.hasBust === true) {
 
@@ -615,9 +626,17 @@
 
       player.balance += (2 * player.currentBet);
 
+      player.wins += 1; // adds one to player's win tally
+
+      player.totalGames += 1; // adds one to player's total games tally
+
     } else {
 
       addNewMessage("Dealer wins!");
+
+      player.losses += 1; // adds one to player's losses tally
+
+      player.totalGames += 1; // adds one to player's total games tally
 
     }
 
@@ -675,7 +694,6 @@
     $playAgainButton.text("Play Again");
 
     $playAgainButton.appendTo("#player-move")
-
 
     $playAgainButton.click(function(){
 
@@ -735,6 +753,7 @@
     $("#play").addClass("bet-first"); // forces user to place bet before pressing play
 
   }
+
 
 
 // }); // <-- closes onload function
