@@ -139,18 +139,19 @@ body {
 } /*sets margin for only first div*/
 
 .now-what {
-	width: 65px;
+/*	width: 65px;*/
 	text-align: center;
 	padding: 1em;
 	background-color: #d6dadd;
-/*	border: 1px solid black;*/
+	border: 1px solid black;
 	display: inline-block;
 	border-radius: 50px;
+	margin: 0.5em;
 }
 
-.now-what:first-of-type {
-	margin-left: 5em;
-}
+/*.now-what:first-of-type {
+	margin-left: 20em;
+}*/
 
 .card {
 	width: 5.5em;

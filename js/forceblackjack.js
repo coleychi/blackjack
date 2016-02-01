@@ -22,8 +22,8 @@
   // createNewCard creates a card div with number and suit and stores it in newCard to be placed on screen
   var createNewCard = function() {
 
-    // console.log("can i access picked card?"); 
-    // console.log(pickedCard); // checking that function can access var pickedCard
+    console.log("can i access picked card?"); 
+    console.log(pickedCard); // checking that function can access var pickedCard
 
     $createCard = $("<div class='card'>"); // creates div with class "card"
 
@@ -135,44 +135,46 @@
   // selects card object from random index of cards array
   var drawRandomCard = function() {
 
-    // if there are more than 35 used cards, rebuild the deck
-    if (usedCardsCount > 35) {
 
-      for (var i = 0; i < cards.length; i++) {
+    console.log("forcing a blackjack")
+    // // if there are more than 35 used cards, rebuild the deck
+    // if (usedCardsCount > 35) {
 
-        cards[i].used = false; // resets all the cards used values to false 
+    //   for (var i = 0; i < cards.length; i++) {
 
-      } // <-- closes for loop
+    //     cards[i].used = false; // resets all the cards used values to false 
 
-      usedCardsCount = 0; // resets counter to 0
+    //   } // <-- closes for loop
 
-    } // <-- closes if statement    
+    //   usedCardsCount = 0; // resets counter to 0
 
-    var arrayLength = cards.length; // stores length of array
+    // } // <-- closes if statement    
 
-    var randomIndex = Math.floor(Math.random() * arrayLength); // generates random index position
+    // var arrayLength = cards.length; // stores length of array
 
-    pickedCard = cards[randomIndex]; // pulls card using randomly generated index position
+    // var randomIndex = Math.floor(Math.random() * arrayLength); // generates random index position
 
-    // console.log(cards[randomIndex]);
+    // pickedCard = cards[randomIndex]; // pulls card using randomly generated index position
 
-    console.log(pickedCard); // confirming that pickedCard is the same as cards[randomIndex]
+    // // console.log(cards[randomIndex]);
 
-    while (pickedCard.used === true) {
+    // console.log(pickedCard); // confirming that pickedCard is the same as cards[randomIndex]
 
-      newRandomIndex = Math.floor(Math.random() * arrayLength);
+    // while (pickedCard.used === true) {
 
-      pickedCard = cards[newRandomIndex];
+    //   newRandomIndex = Math.floor(Math.random() * arrayLength);
 
-      console.log(pickedCard);
+    //   pickedCard = cards[newRandomIndex];
 
-    } // <-- closes while loop
+    //   console.log(pickedCard);
 
-      // console.log(pickedCard); // checks if value of used has been toggled to true
+    // } // <-- closes while loop
 
-    pickedCard.used = true; // is there a way to do toggle card using "this"?
+    //   // console.log(pickedCard); // checks if value of used has been toggled to true
 
-    usedCardsCount += 1; // adds 1 to usedCardsCount value
+    // pickedCard.used = true; // is there a way to do toggle card using "this"?
+
+    // usedCardsCount += 1; // adds 1 to usedCardsCount value
 
   } // <-- closes drawRandomCard function
 
@@ -228,9 +230,6 @@
       // This is called in addCardValues() so I don't need to re-call the function
       // checkForAce(); // checks player's hand sum for an ace
 
-      // needs to be first or dealer hand wont generate if player gets instand blackjack
-      generateDealerHand(); // generates dealer hand
-
       checkForBlackjack(); // checks player's hand sum for blackjack
 
       checkForBust(); // checks player's hand sum for bust
@@ -242,6 +241,8 @@
       // this.addClass.("clicked");
 
       // $(this).hide(); // hides play button
+
+      generateDealerHand(); // generates dealer hand
 
     } else if ($(this).hasClass("bet-first")) {
 
@@ -589,8 +590,6 @@
 
   // checks both hands and declares a winner
   var checkWinner = function() {
-
-    // setTimeout(showHiddenCard, 1000); // delays dealer's card reveal
 
     showHiddenCard(); // possibly put into a set timeout function to delay reveal?
 
