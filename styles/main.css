@@ -65,6 +65,12 @@ body {
 	padding: 3px;
 }
 
+#message-center p:last-of-type {
+	color: #142943;
+	font-size: 0.9em;
+	font-weight: bold;
+}
+
 #message-center:hover h2 {
 	color: #d82f4b; /* same color as .hidden card background color */
 }

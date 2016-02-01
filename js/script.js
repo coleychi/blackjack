@@ -13,9 +13,9 @@
       var $messageDiv = $("#message-center"); // grabs div with id "message-center"
       var $newMessage = $("<p>"); // creates new p tag
       $newMessage.text(message); // sets innertext for p tags
-      $newMessage.appendTo($messageDiv);
-
-  } // function to add a new message to message-center container 
+      $newMessage.appendTo($messageDiv); // appends paragraph to div
+      // $("#message-center").animate({scrollTop: $("#message-center")[0].scrollHeight}, 1000); // scrolls div to the bottom
+  } // <-- closes addNewMessage function
 
   var newCard; // storing the whole div element of the new card in global scope to access later
 
