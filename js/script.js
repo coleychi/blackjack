@@ -15,6 +15,43 @@
 
   } // function to add a new message to message-center container 
 
+  var newCard;
+
+  var createNewCard = function() {
+
+    console.log("can i access picked card?")
+    console.log(pickedCard)
+
+    // var $playerSection = $("#player"); // grabs player section
+
+    $createCard = $("<div class='card'>"); // creates div with class "card"
+
+    // $createCard.appendTo($playerSection); // appends new card to the player section
+
+    $cardNumber = $("<span class='card-name'>"); // creates span with class "card-name" where the card name will display
+
+    if(pickedCard.numberCard == false) {
+
+      $cardNumber.text(pickedCard.faceCard); // if the card is not a number, display face value in span
+
+    } else {
+
+      $cardNumber.text(pickedCard.numberCard); // if the card is a number, display number value in span
+
+    }
+
+    $createCard.append($cardNumber); // appends span to card div
+
+    $cardSuit = $("<span class='card-suit'>");
+
+    $cardSuit.html(pickedCard.suit);
+
+    $createCard.append($cardSuit);
+
+    newCard = $createCard
+
+  }
+
   // =====================
   // PLAYER DEFAULT VALUES
   // ---------------------
@@ -84,13 +121,6 @@
 
     } // <-- closes suits for loop
 
-    // sets value of Ace
-    if (Card.faceCard === "A") {
-
-        Card.cardValue = "Hello"
-
-    } // this does not work
-
     return cards;
 
   } // <-- closes buildDeck function
@@ -159,31 +189,38 @@
   
     drawRandomCard(); // select random object (card) from cards array
 
-    var $playerSection = $("#player"); // grabs player section
+    createNewCard();
 
-    $createCard = $("<div class='card'>"); // creates div with class "card"
+    $("#player").append(newCard);
 
-    $createCard.appendTo($playerSection); // appends new card to the player section
+    console.log(newCard)
 
-    $cardNumber = $("<span class='card-name'>"); // creates span with class "card-name" where the card name will display
 
-    if(pickedCard.numberCard == false) {
+    // var $playerSection = $("#player"); // grabs player section
 
-      $cardNumber.text(pickedCard.faceCard); // if the card is not a number, display face value in span
+    // $createCard = $("<div class='card'>"); // creates div with class "card"
 
-    } else {
+    // $createCard.appendTo($playerSection); // appends new card to the player section
 
-      $cardNumber.text(pickedCard.numberCard); // if the card is a number, display number value in span
+    // $cardNumber = $("<span class='card-name'>"); // creates span with class "card-name" where the card name will display
 
-    }
+    // if(pickedCard.numberCard == false) {
 
-    $createCard.append($cardNumber); // appends span to card div
+    //   $cardNumber.text(pickedCard.faceCard); // if the card is not a number, display face value in span
 
-    $cardSuit = $("<span class='card-suit'>");
+    // } else {
 
-    $cardSuit.html(pickedCard.suit);
+    //   $cardNumber.text(pickedCard.numberCard); // if the card is a number, display number value in span
 
-    $createCard.append($cardSuit);
+    // }
+
+    // $createCard.append($cardNumber); // appends span to card div
+
+    // $cardSuit = $("<span class='card-suit'>");
+
+    // $cardSuit.html(pickedCard.suit);
+
+    // $createCard.append($cardSuit);
 
   }
 
@@ -383,37 +420,45 @@
 
     $createSecretCard.appendTo($dealerSection); // appends first card to dealer's section
 
-    dealer.handSum += pickedCard.cardValue;
+    dealer.handSum += pickedCard.cardValue; // adds value of secret card to dealer's hand total
 
     drawRandomCard(); // draws random card from cards array
 
     dealer.hand.push(pickedCard);
 
-    $createCard = $("<div class='card'>");
+    dealer.handSum += pickedCard.cardValue; // adds value of shown card to dealer's hand total
 
-    $createCard.appendTo($dealerSection);
+    createNewCard();
 
-    dealer.handSum += pickedCard.cardValue;
+    $("#dealer").append(newCard);
 
-      $cardNumber = $("<span class='card-name'>");
 
-      if(pickedCard.numberCard == false) {
 
-        $cardNumber.text(pickedCard.faceCard); // if the card is not a number, display face value in span
+    // $createCard = $("<div class='card'>");
 
-        } else {
+    // $createCard.appendTo($dealerSection);
 
-        $cardNumber.text(pickedCard.numberCard); // if the card is a number, display number value in span
+    // dealer.handSum += pickedCard.cardValue;
 
-      } // <-- closes if loop 
+    //   $cardNumber = $("<span class='card-name'>");
 
-    $createCard.append($cardNumber);
+    //   if(pickedCard.numberCard == false) {
 
-    $cardSuit = $("<span class='card-suit'>");
+    //     $cardNumber.text(pickedCard.faceCard); // if the card is not a number, display face value in span
 
-    $cardSuit.html(pickedCard.suit);
+    //     } else {
 
-    $createCard.append($cardSuit);
+    //     $cardNumber.text(pickedCard.numberCard); // if the card is a number, display number value in span
+
+    //   } // <-- closes if loop 
+
+    // $createCard.append($cardNumber);
+
+    // $cardSuit = $("<span class='card-suit'>");
+
+    // $cardSuit.html(pickedCard.suit);
+
+    // $createCard.append($cardSuit);
 
   } // <-- closes generateDealerHand function
 
@@ -429,29 +474,33 @@
 
       console.log(dealer.handSum);
 
-      $createCard = $("<div class='card'>");
+      createNewCard();
 
-      $createCard.appendTo($("#dealer"));
+    $("#dealer").append(newCard);
 
-      $cardNumber = $("<span class='card-name'>");
+    //   $createCard = $("<div class='card'>");
 
-      if(pickedCard.numberCard == false) {
+    //   $createCard.appendTo($("#dealer"));
 
-        $cardNumber.text(pickedCard.faceCard); // if the card is not a number, display face value in span
+    //   $cardNumber = $("<span class='card-name'>");
 
-        } else {
+    //   if(pickedCard.numberCard == false) {
 
-        $cardNumber.text(pickedCard.numberCard); // if the card is a number, display number value in span
+    //     $cardNumber.text(pickedCard.faceCard); // if the card is not a number, display face value in span
 
-      } // <-- closes if loop 
+    //     } else {
 
-    $createCard.append($cardNumber);
+    //     $cardNumber.text(pickedCard.numberCard); // if the card is a number, display number value in span
 
-    $cardSuit = $("<span class='card-suit'>");
+    //   } // <-- closes if loop 
 
-    $cardSuit.html(pickedCard.suit);
+    // $createCard.append($cardNumber);
 
-    $createCard.append($cardSuit);
+    // $cardSuit = $("<span class='card-suit'>");
+
+    // $cardSuit.html(pickedCard.suit);
+
+    // $createCard.append($cardSuit);
 
     } // <-- closes while loop
 
