@@ -18,22 +18,20 @@
 
     // -- ADD A CSS CLASS TO FIRST DEALER'S CARD?
 
-// 6-- WINS AND LOSSES COUNTER
-
 // can input box accept given input?
 
 
 // KNOWN PROBLEMS AND OTHER NOTES
 
-// player's start amount hardcoded into html 
+// player's start amount hardcoded into html -- DONE!
 
 // should move playerbalance to message div function to somewhere else -- DONE!
 
 // is there a way to post message once if user keeps pressing button?
 
-// need to remove drawn cards from the deck
+// need to remove drawn cards from the deck -- DONE
 
-// deal and draw can probably be combined into one function
+// deal and draw can probably be combined into one function -- NO!
 
 // turn off play button until end of the round -- DONE!
 
@@ -43,4 +41,5 @@
 // ADDED CLASS CLICKED TO PLAY-- REMEMBER TO REMOVE IT!!!!!!!
 
 // might be able to take out .hasBust and .hasBlackjack keys in player object
+
 

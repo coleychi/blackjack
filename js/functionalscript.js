@@ -1,3 +1,5 @@
+// this script works feb 1 8:52AM
+
 // $(function() { 
 
   // console.log("I'm running"); // confirms that 

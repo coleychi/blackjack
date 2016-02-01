@@ -1,0 +1,288 @@
+/*this stylesheet works feb 1 8:82am */
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+@font-face {
+    font-family: Playfair;
+    src: url('../fonts/PlayfairDisplay-Regular.ttf');
+}
+
+body {
+	font-family: "Helvetica", sans-serif;
+	background-color: #142943;
+}
+
+#container {
+	width: 85%;
+	margin: 3em auto;
+	overflow: auto;
+/*	background-color: pink;*/
+}
+
+#dealer {
+	width: 75%;
+	min-height: 175px;
+	float: right;
+/*	background-color: green;*/
+	padding: 2em;
+	display: inline-block;
+	text-align: center;
+	box-sizing: border-box;
+}
+
+#player {
+	width: 75%;
+	float: right;
+/*	background-color: blue;*/
+	padding: 2em;
+	display: inline-block;
+	text-align: center;
+	box-sizing: border-box;
+}
+
+#message-center {
+	width: 25%;
+	background-color: rgba(236, 238, 231, 0.4); /* same color as card */
+	padding: 0.6em;
+	padding-bottom: 2em;
+	height: 58.5%; /* THIS IS HARD CODED IN */
+	display: inline-block;
+/*	opacity: 0.4;*/
+	position: relative; /* for record counter */
+	overflow: scroll;
+	box-sizing: border-box;
+	transition: background-color 1.5s linear;
+}
+
+#message-center:hover {
+	background-color: rgba(236, 238, 231, 0.85);
+/*	opacity: 0.85; */
+}
+
+#message-center p {
+	font-size: 0.8em;
+	padding: 3px;
+}
+
+#message-center:hover h2 {
+	color: #d82f4b; /* same color as .hidden card background color */
+}
+
+.record {
+	position: absolute;
+	bottom: 1em;
+} /* for record counter */
+
+#user-panel {
+	width: 75%;
+	float: right;
+	padding: 1em;
+/*	background-color: purple;*/
+	display: block;
+	box-sizing: border-box;
+}
+
+#bank {
+	color: white;
+	width: 25%;
+	float: left;
+	padding: 0.5em;
+	position: relative; /* .record has absolute positioning over this div */
+/*	background-color: purple;*/
+	display: block;
+	box-sizing: border-box;
+}
+
+#go-away {
+	display: none;
+}
+
+.money {
+	font-size: 2.5em;
+	text-align: center;
+	display: block;
+	padding: 0.5em;
+}
+
+.place-bet {
+/*	background-color: orange;*/
+/*	float: right;
+	margin-right: 3em;*/
+	padding: 1em;
+	text-align: center;
+}
+
+#bet-input {
+	width: 192px;
+	font-size: 1em;
+	padding: 0.25em;
+}
+
+/*.place-bet input {
+	width: 500px;
+	font-size: 100px;
+}*/ /* input box won't adopt this */
+
+.move-button {
+	width: 65px;
+	text-align: center;
+	padding: 1em;
+	background-color: #d6dadd;
+/*	border: 1px solid black;*/
+	display: inline-block;
+	border-radius: 50px;
+}
+
+.move-button:first-of-type {
+	margin-left: 5em;
+} /*sets margin for only first div*/
+
+.now-what {
+	width: 65px;
+	text-align: center;
+	padding: 1em;
+	background-color: #d6dadd;
+/*	border: 1px solid black;*/
+	display: inline-block;
+	border-radius: 50px;
+}
+
+.now-what:first-of-type {
+	margin-left: 5em;
+}
+
+.card {
+	width: 5.5em;
+	height: 7em;
+	margin-right: 0.3em;
+	margin-left: 0.3em;
+	margin-bottom: 0.6em;
+	padding: 0.25em;
+	background-color: #eceee7; /* same color as message center */
+	display: inline-block;
+	position: relative;
+	text-align: left;
+	border-radius: 0.5em;
+}
+
+.card-name {
+/*	background-color: green;*/
+	font-weight: bold;
+	color: #f12070;
+	font-size: 1.5em;
+	letter-spacing: -3px;
+	position: absolute;
+	padding-top: 0.15em;
+	padding-right: 0.35em;
+	top: 0;
+	right: 0;
+}
+
+.card-suit {
+	position: absolute;
+	top: 4%;
+	left: 10%;
+	font-size: 5em;
+	color: #20a4b3;
+	opacity: 0.3;
+}
+
+.hidden-card {
+	background-image: url("../images/card_bg.png");
+	background-size: 150%;
+	background-color: #d82f4b; /* same color as #message-center h2 on hover */
+	border: 1px solid white;
+} /* need to remove .card-name span in js file */
+
+h1 {
+	color: white;
+	font-family: "Playfair", "Times New Roman";
+	font-size: 2.5em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	letter-spacing: 2px;
+}
+
+h2 {
+/*	background-color: #89c3c7;*/
+/*	padding: 0.8em 0 0 1em;*/
+	text-align: center;
+	color: white;
+	font-size: 1.5em;
+/*	padding-bottom: 1px;*/
+	border-bottom: 1px solid #142a59; /* change this color */
+/*	margin: -0.67em; *//* h2 adopting padding of #message-center parent */
+	margin-bottom: 0.5em; /* h2 adopting padding of #message-center parent */
+	display: block;
+	transition: color 3s linear;
+} /* degrades around 947px */
+
+#leaving {
+	display: block;
+	font-size: 1.5em;
+	color: white;
+	text-align: center;
+	width: 70%;
+	margin: 4em auto;
+}
+
+
+/* START MEDIA QUERIES */
+
+@media (max-width: 959px) {
+	/* minimum width is around 792... starts to look silly */
+
+	body {
+/*		background-color: yellow;*/
+		font-size: 0.9em;
+	}
+
+	#dealer {
+		margin-top: 2em;
+	}
+
+	.place-bet {
+		padding: 0.8em;
+	}
+
+	#bet-input {
+	width: 174px;
+	margin-bottom: 0.5em;
+	font-size: 1em;
+	padding: 0.25em;
+	} 
+
+	.move-button {
+		width: 55px;
+		padding: 0.5em;
+	} /* looks a little silly starting at 754 */
+
+	.move-button:first-of-type {
+	margin-left: 1.25em;
+	} /*sets margin for only first div*/
+	
+
+	h2 {
+		font-size: 1.15em;
+	}
+
+}
+
+@media (max-width: 691px) {
+	#container {
+		display: none;
+	}
+
+	#go-away {
+		display: block;
+		font-size: 1.5em;
+		color: white;
+		text-align: center;
+		width: 70%;
+		margin: 4em auto;
+	}
+
+} /* 405 will fit 2 cards */ 
