@@ -68,6 +68,7 @@
     wins: 0,
     losses: 0,
     totalGames: 0
+
   };
 
   // ======================
@@ -646,7 +647,7 @@
     player.currentBet = 0; // resets current bet amount to 0
 
     var $playerBalance = $(".money"); // grabs span with class money
-    $playerBalance.text(player.balance); // START AMOUNT IS HARDCODED INTO HTML
+    $playerBalance.text("$" + player.balance); // START AMOUNT IS HARDCODED INTO HTML
 
     nowWhat(); // runs nowWhat function
 
@@ -724,6 +725,22 @@
 
     }) // <-- closes leaveButton click function
 
+    var $leaveButton = $("<button class='now-what'>"); 
+
+    $leaveButton.text("Reset Game");
+
+    $leaveButton.appendTo("#player-move");
+
+    $leaveButton.click(function(){
+
+      resetAll();
+
+      $(".move-button").show(); // shows original three buttons
+
+      $(".now-what").hide(); // hides now-what buttons
+
+    }) // <-- closes leaveButton click function
+
   } // <-- closes nowWhat function
 
   var newRound = function() {
@@ -755,7 +772,30 @@
 
     $("#play").addClass("bet-first"); // forces user to place bet before pressing play
 
-  }
+  } // <-- closes newRound function
+
+  var resetAll = function() {
+
+    newRound(); 
+
+    player.balance = 500;
+
+    var $playerBalance = $(".money").text("$" + player.balance); // grabs span with class money
+
+    // resets all the cards in the deck to unused
+    for (var i = 0; i < cards.length; i++) {
+
+      cards[i].used = false; // resets all the cards used values to false 
+
+    } // <-- closes for loop
+
+    usedCardsCount = 0; // resets counter to 0
+
+    player.wins = 0;
+    player.losses = 0;
+    player.totalGames = 0;
+
+  } // <-- closes resetAll function
 
 
 // }); // <-- closes onload function
