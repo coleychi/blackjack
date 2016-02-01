@@ -691,11 +691,13 @@
 
   var nowWhat = function() {
 
+    promptNewGame();
+
     $(".move-button").hide(); // hides move-button options
 
     var $playAgainButton = $("<button class='now-what'>"); // creates new button with class now what
 
-    $playAgainButton.text("Play Again");
+    $playAgainButton.text("Next Round");
 
     $playAgainButton.appendTo("#player-move")
 
@@ -725,13 +727,13 @@
 
     }) // <-- closes leaveButton click function
 
-    var $leaveButton = $("<button class='now-what'>"); 
+    var $resetGame = $("<button class='now-what'>"); 
 
-    $leaveButton.text("Reset Game");
+    $resetGame.text("Reset Game");
 
-    $leaveButton.appendTo("#player-move");
+    $resetGame.appendTo("#player-move");
 
-    $leaveButton.click(function(){
+    $resetGame.click(function(){
 
       resetAll();
 
@@ -739,7 +741,7 @@
 
       $(".now-what").hide(); // hides now-what buttons
 
-    }) // <-- closes leaveButton click function
+    }) // <-- closes resetGame click function
 
   } // <-- closes nowWhat function
 
@@ -796,6 +798,47 @@
     player.totalGames = 0;
 
   } // <-- closes resetAll function
+
+  var promptNewGame = function() {
+
+    // if(player.balance <= 0) {
+
+      $("#dealer").empty();
+      $("#player").empty();
+
+      $newDiv = $("<div id='new-game'>").appendTo("#dealer");
+      $newParagraph = $("<p>").html("You're out of money... <br> Do you want to start over?").appendTo($newDiv);
+      $resetGameButton = $("<button class='now-what'>").text("Start over").appendTo($newDiv);
+      
+      $resetGameButton.click(function(){
+
+          alert("You probably have a gambling problem.")
+
+          resetAll();
+
+          $placeBetButton.prop("disabled", false); // unlocks bet buttons
+
+        $(".move-button").show(); // shows original three buttons
+
+        $(".now-what").hide(); // hides now-what buttons
+
+      }) // <-- closes resetGame click function
+
+      $leaveGameButton = $("<button class='now-what'>").text("Leave game").appendTo($newDiv);
+
+      $leaveGameButton.click(function(){
+
+        $("#container").empty(); // empties the entire container div
+
+        var $newDiv = $("<div id='leaving'>");
+        $newDiv.text("Well. Bye then.");
+        $newDiv.appendTo($("#container"));
+
+      }) // <-- closes leaveButton click function
+
+    // }
+
+  }
 
 
 // }); // <-- closes onload function
