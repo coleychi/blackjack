@@ -12,7 +12,7 @@
       var $newMessage = $("<p>").text(message).appendTo($("#message-center")); // creates new p tags for the message and appends it to the div
        // $("#message-center").animate({scrollTop: $("#message-center")[0].scrollHeight}, 1000); // scrolls div to the bottom
   
-  } // <-- closes addNewMessage function
+  }; // <-- closes addNewMessage function
 
   var newCard; // storing the whole div element of the new card in global scope to access later
 
@@ -112,7 +112,7 @@
 
     return cards;
 
-  } // <-- closes buildDeck function
+  }; // <-- closes buildDeck function
 
 
 
@@ -138,11 +138,11 @@
 
         cards[i].used = false; // resets all the cards used values to false 
 
-      } // <-- closes for loop
+      }; // <-- closes for loop
 
       usedCardsCount = 0; // resets counter to 0
 
-    } // <-- closes if statement    
+    }; // <-- closes if statement    
 
     var arrayLength = cards.length; // stores length of array
 
@@ -156,13 +156,13 @@
 
       pickedCard = cards[newRandomIndex];
 
-    } // <-- closes while loop
+    }; // <-- closes while loop
 
     pickedCard.used = true; // is there a way to do toggle card using "this"?
 
     usedCardsCount += 1; // adds 1 to usedCardsCount value
 
-  } // <-- closes drawRandomCard function
+  }; // <-- closes drawRandomCard function
 
 
   // dealCard draws a random card and displays it on the screen
@@ -174,7 +174,7 @@
 
     $("#player").append(newCard); // places newCard in #player section
 
-  } // <-- closes dealCard function
+  }; // <-- closes dealCard function
 
 
   // ====================
@@ -203,7 +203,7 @@
 
         player.hand.push(pickedCard); // pushes the dealt card to player's hand
 
-      } // <-- closes for loop
+      }; // <-- closes for loop
 
       addCardValues(); // function adds the value of all cards in player's hand array
 
@@ -226,7 +226,7 @@
 
         addNewMessage("You were already dealt a hand! Press HIT or STAY to continue."); // player cannot get a new hand until round ends
 
-      } // <-- closes if/else statement
+      }; // <-- closes if/else statement
 
   }); // <-- closes playButton click function
 
@@ -254,7 +254,7 @@
 
         addNewMessage("You can't have another card, silly!");
 
-    } // <-- closes if statement
+    }; // <-- closes if statement
 
   }); // <-- closes hitButton click function
 
@@ -390,7 +390,7 @@
 
       dealer.handSum += dealer.hand[i].cardValue;
 
-    } // <-- closes for loop
+    }; // <-- closes for loop
 
     // check if dealer has an ace
     for (var i = 0; i < dealer.hand.length; i++) {
@@ -401,7 +401,7 @@
 
         dealer.handSum += 1; // recalculates card value (ace = 11)
 
-      } // <-- closes if statement
+      }; // <-- closes if statement
 
     // check if dealer has blackjack
       if (dealer.handSum === 21) {
@@ -420,9 +420,9 @@
 
         dealer.hasBust = false
 
-      } // closes dealer.handSum < 21 if statement
+      }; // closes dealer.handSum < 21 if statement
 
-    } // <-- closes if statement
+    }; // <-- closes if statement
 
     if (dealer.handSum > 21) {
 
@@ -458,9 +458,9 @@
 
     $hiddenCard.append($cardSuit);
 
-    $hiddenCard.removeClass("hidden-card")
+    $hiddenCard.removeClass("hidden-card");
 
-  }
+  };
 
 
 
@@ -478,11 +478,11 @@
 
       player.handSum += player.hand[i].cardValue; // add card value to player's hand sum
 
-    }
+    };
 
     checkForAce();
 
-  } // <-- closes addCardValues function
+  }; // <-- closes addCardValues function
 
   // checks if player has a blackjack
   var checkForBlackjack = function() {
@@ -526,15 +526,15 @@
 
         player.handSum += 1; // recalculates card value (ace = 11)
 
-      } // <-- closes if statement
+      }; // <-- closes if statement
 
       if (player.handSum === 21) {
 
         player.hasBlackjack = true;
 
-      } // <-- closes if statement
+      }; // <-- closes if statement
 
-    } // <-- closes for loop
+    }; // <-- closes for loop
 
   if (player.hasAce === true && player.handSum > 21) {
 
@@ -544,11 +544,11 @@
 
       player.hasBust = false;
 
-    } // <-- closes if statement
+    }; // <-- closes if statement
 
-  } // <-- closes if statement
+  }; // <-- closes if statement
 
-  } // <-- closes checkForAce function
+  }; // <-- closes checkForAce function
 
 
   // checks both hands and declares a winner
@@ -748,7 +748,7 @@
         $(".move-button").show(); // shows original three buttons
         $(".now-what").hide(); // hides now-what buttons
 
-      }) // <-- closes resetGame click function
+      }); // <-- closes resetGame click function
 
       $leaveGameButton = $("<button class='now-what'>").text("Leave game").appendTo($newDiv);
 
@@ -760,11 +760,10 @@
         $newDiv.text("Well. Bye then.");
         $newDiv.appendTo($("#container"));
 
-      }) // <-- closes leaveButton click function
+      }); // <-- closes leaveButton click function
 
-    }
+    };
 
-  }
-
+  };
 
 // }); // <-- closes onload function
