@@ -44,5 +44,6 @@
 
 // slow down blackjack/cards being dealt/etc
   // -- dealer's cards reveal automatically if the player has a blackjack (happens so quickly!)
+  // -- dealer's card flip and card draw appear to happen simultaneously as well 
 
 

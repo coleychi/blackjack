@@ -3,7 +3,7 @@
 <!-- INSERT LOCATION -->
 
 ## Description
-A basic blackjack game. User begins with $500 and plays 1v1 against the dealer.
+A simple blackjack game. User begins with $500 and plays 1v1 against the dealer.
 
 ## Tech Used
 - HTML
@@ -19,7 +19,6 @@ A basic blackjack game. User begins with $500 and plays 1v1 against the dealer.
 - Dealer's drawn cards appear on a delay
 - User can manually input the amount they want to bet in the input box
 - Make CSS more responsive by making the game functional on smaller screens
-- Adding multiplayer functionality
 
 ## Known Issues
 - Dealer's hand reveals almost instantly if player has a blackjack on the initial hand
@@ -27,4 +26,4 @@ A basic blackjack game. User begins with $500 and plays 1v1 against the dealer.
 
 ## Notes
 - Author: Nicole Chiang
-- Last Updated: February 2, 2016
+- Last Updated: February 1, 2016
