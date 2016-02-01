@@ -1,7 +1,5 @@
 // $(function() { 
 
-  // console.log("I'm running"); // confirms that file is linked properly
-
   // =================
   // DISPLAY FUNCTIONS
   // -----------------
@@ -59,7 +57,8 @@
     hasAce: false,
     wins: 0,
     losses: 0,
-    totalGames: 0
+    totalGames: 0,
+    freeloader: false
 
   };
 
@@ -83,6 +82,7 @@
   var cards = []; // empty array for new cards to be pushed into
 
   var usedCardsCount = 0; // stores the number of used cards in cards array
+
 
   // Uses Card constructor to create a deck of cards
   var buildDeck = function() {
@@ -381,10 +381,11 @@
 
   } // <-- closes dealerDrawCards function
 
+
   // checkDealerSum calculates the dealer's sum
   var checkDealerSum = function() {
 
-    dealer.handSum = 0; // empties dealer's hand
+    dealer.handSum = 0; // empties dealer's hand every time function is run
 
     for (var i = 0; i < dealer.hand.length; i++) {
 
@@ -432,6 +433,7 @@
 
   }; // <-- closes dealerCheckSum
 
+
   var showHiddenCard = function() {
 
     var dealerHiddenCard = dealer.hand[0];
@@ -471,7 +473,6 @@
   // adds card values
   var addCardValues = function () {
 
-
     player.handSum = 0; // resets player.handSum to zero (otherwise numbers add weirdly)
 
     for (i = 0; i < player.hand.length; i++) {
@@ -483,6 +484,7 @@
     checkForAce();
 
   }; // <-- closes addCardValues function
+
 
   // checks if player has a blackjack
   var checkForBlackjack = function() {
@@ -501,6 +503,7 @@
 
   }; // <-- closes checkForBlackjack function
 
+
   // checks if player has a bust
   var checkForBust = function() {
 
@@ -515,6 +518,7 @@
     };
 
   }; // <-- closes checkForBust function
+
 
   var checkForAce = function() {
 
@@ -612,6 +616,7 @@
 
     nowWhat(); // runs nowWhat function
 
+    moneyEvent();
   }
 
 
@@ -675,6 +680,7 @@
 
   } // <-- closes nowWhat function
 
+
   var newRound = function() {
 
     player.hand = [];
@@ -703,6 +709,7 @@
 
   } // <-- closes newRound function
 
+
   var resetAll = function() {
 
     newRound(); 
@@ -725,6 +732,7 @@
     player.totalGames = 0;
 
   } // <-- closes resetAll function
+
 
   var promptNewGame = function() {
 
@@ -762,8 +770,42 @@
 
       }); // <-- closes leaveButton click function
 
-    };
+    }; // <-- closes if statement
 
-  };
+  }; // <-- closes promptNewGame function
+
+  var moneyEvent = function() {
+
+    if ((player.totalGames >= 15) && (player.freeloader === false) && (player.losses > (player.wins * 3))) {
+      
+      $("#dealer").empty();
+      $("#player").empty();
+
+      $newDiv = $("<div id='new-game'>").appendTo("#dealer");
+      $newParagraph = $("<p>").html("You're not very good at this...<br> Have some money on the house.").appendTo($newDiv);
+
+      alert("You have received $100 on the house!");
+
+      player.balance += 100; // player gets 100 dollars
+      player.freeloader = true; // toggles player.freeloader to true so event cant run again
+      
+      $(".money").text("$" + player.balance); // START AMOUNT IS HARDCODED INTO HTML
+
+      var $nextRound = $("<button class='now-what'>"); // creates new button with class now what
+
+      $nextRound.text("Next Round");
+
+      $nextRound.appendTo("#new-game")
+
+      $nextRound.click(function(){
+
+        newRound(); // resets the game
+
+    }); // <-- closes nextRound click function
+
+    }; // <-- closes if statement
+
+  }; // <-- closes moneyEvent function
+
 
 // }); // <-- closes onload function

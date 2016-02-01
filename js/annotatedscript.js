@@ -6,7 +6,7 @@
   // DISPLAY FUNCTIONS
   // -----------------
 
-  // Might be able to move this doen when window onload goes on?
+  // Might be able to move this down when window onload goes on?
 
   // addNewMessage creates a new message to be added to the message-center div
   var addNewMessage = function(message) {
