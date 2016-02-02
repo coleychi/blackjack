@@ -634,8 +634,6 @@
 
   var nowWhat = function() {
 
-    promptNewGame();
-
     $(".move-button").hide(); // hides move-button options
 
     var $playAgainButton = $("<button class='now-what'>"); // creates new button with class now what
@@ -685,6 +683,9 @@
       $(".now-what").hide(); // hides now-what buttons
 
     }) // <-- closes resetGame click function
+
+    promptNewGame(); // ask player to play again 
+      // function removes play, leave, and reset buttons
 
   } // <-- closes nowWhat function
 
@@ -753,6 +754,10 @@
       $("#dealer").empty();
       $("#player").empty();
 
+      $(".now-what").hide();
+
+      // $(".move-button").hide(); // hides move-button options
+
       $newDiv = $("<div id='new-game'>").appendTo("#dealer");
       $newParagraph = $("<p>").html("You're out of money... <br> Do you want to start over?").appendTo($newDiv);
       $resetGameButton = $("<button class='now-what'>").text("Start over").appendTo($newDiv);
@@ -763,7 +768,7 @@
 
           resetAll();
 
-          $placeBetButton.prop("disabled", false); // unlocks bet buttons
+          $(".place-bet").prop("disabled", false); // unlocks bet buttons
 
         $(".move-button").show(); // shows original three buttons
         $(".now-what").hide(); // hides now-what buttons
