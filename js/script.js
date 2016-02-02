@@ -1,4 +1,4 @@
-// $(function() { 
+$(function() { 
 
   // =================
   // DISPLAY FUNCTIONS
@@ -525,4 +525,4 @@
     }; // <-- closes if statement
   }; // <-- closes moneyEvent function
 
-// }); // <-- closes onload function
+}); // <-- closes onload function
