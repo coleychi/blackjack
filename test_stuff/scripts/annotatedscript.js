@@ -196,6 +196,7 @@
   } // <-- closes dealCard function
 
 
+
   // ====================
   // BUTTON FUNCTIONALITY
   // --------------------
