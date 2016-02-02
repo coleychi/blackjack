@@ -264,6 +264,7 @@ $(function() {
         dealer.handSum += pickedCard.cardValue; // adds value of picked card to dealer's hand sum
         createNewCard(); // creates a card div with the name and suit of the picked card
         $("#dealer").append(newCard); // adds the new card to the display
+        checkDealerSum(); // rechecks dealer sum (if dealer draws an ace)
       } // <-- closes while loop
   } // <-- closes dealerDrawCards function
 
