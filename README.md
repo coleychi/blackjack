@@ -23,6 +23,7 @@ A simple blackjack game. User begins with $500 and plays 1v1 against the dealer.
 ## Known Issues
 - Dealer's hand reveals almost instantly if player has a blackjack on the initial hand
 - Duplicate game logic (player and dealer conditions are defined separately)
+- Bet buttons do not unlock if player wins the round on which he gambled all his money 
 
 ## Notes
 - Author: Nicole Chiang
