@@ -47,3 +47,11 @@
   // -- dealer's card flip and card draw appear to happen simultaneously as well 
 
 
+
+// PSEUDO-CODE SPLIT
+
+// -- 1. IF STATEMENT (if card.number = card.number || card.face = card face)
+
+// -- 2. Create two "hand" divs and place them in #player section
+
+// -- 3. hit function? hit one? hit both?
