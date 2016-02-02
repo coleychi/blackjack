@@ -1,6 +1,6 @@
 # Twenty-One
 
-<!-- INSERT LOCATION -->
+http://coleychi.github.io/blackjack/
 
 ## Description
 A simple blackjack game. User begins with $500 and plays 1v1 against the dealer.
