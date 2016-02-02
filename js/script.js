@@ -327,7 +327,7 @@ $(function() {
     };
     checkForAce();
   }; // <-- closes addCardValues function
-
+  
   // checks if player has a blackjack
   var checkForBlackjack = function() {
     if (player.handSum === 21) {
